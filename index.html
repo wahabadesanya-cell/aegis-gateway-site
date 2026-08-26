@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aegis Guard Gateway — EU AI Act Compliance for Enterprise AI</title>
+  <meta name="description" content="Aegis Guard Gateway intercepts every AI tool call at the Model Context Protocol layer and classifies it against 27 pre-mapped compliance rules — EU AI Act, Nigeria's NDPA, UK GDPR, Singapore's PDPA, Egypt's PDPL, and Colorado's ADMT Act — in real time, before execution, with a tamper-evident HMAC-SHA256 audit trail and ISO/IEC 42001 Annex A control mapping." />
+  <link rel="canonical" href="https://gateway.adesanyaaiadvisory.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Aegis Guard Gateway" />
+  <meta property="og:title" content="Aegis Guard Gateway — EU AI Act Compliance for Enterprise AI" />
+  <meta property="og:description" content="Real-time MCP compliance interception: 27 pre-mapped rules across the EU AI Act, Nigeria's NDPA, UK GDPR, Singapore's PDPA, Egypt's PDPL, and Colorado's ADMT Act, deterministic risk scoring, tamper-evident audit trail, ISO 42001 Annex A auto-tagging." />
+  <meta property="og:url" content="https://gateway.adesanyaaiadvisory.com/" />
+  <meta property="og:image" content="https://adesanyaaiadvisory.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Aegis Guard Gateway — EU AI Act Compliance for Enterprise AI" />
+  <meta name="twitter:description" content="Real-time MCP compliance interception at the protocol layer — 27 pre-mapped rules across the EU AI Act, Nigeria's NDPA, UK GDPR, Singapore's PDPA, Egypt's PDPL, and Colorado's ADMT Act, tamper-evident audit trail." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════════
+       DESIGN SYSTEM — "Legal-Grade Protocol"
+       Base: near-black ink (not navy-SaaS-navy). Accent: brass/gold, tying to
+       Adesanya AI Advisory's existing approved brand instead of generic azure.
+       Risk-tier colours (red/amber/gold/green) are FUNCTIONAL — they encode
+       real severity information from the rule engine — and are preserved.
+       Display type: Source Serif 4 (legal gravitas, matches brand). Body/UI:
+       Inter. Data/code: existing mono stack, unchanged — it already earns
+       its place.
+       ═══════════════════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #0A0A0C;
+      --ink-deep:   #050506;
+      --panel:      #131318;
+      --panel-lit:  #1B1B22;
+      --border:     #29292F;
+      --border-lit: #3A3A44;
+
+      --gold:       #C9A14A;
+      --gold-bright:#E4BF6E;
+      --gold-dim:   #8E6C2E;
+      --brass:      #8E6C2E;
+
+      --prohibited: #E85D5D;
+      --prohibited-dim: rgba(232,93,93,0.12);
+      --high-risk:  #E8A33D;
+      --high-risk-dim: rgba(232,163,61,0.12);
+      --transparency: #C9A14A;
+      --transparency-dim: rgba(201,161,74,0.12);
+      --minimal:    #5FB58A;
+      --minimal-dim: rgba(95,181,138,0.12);
+
+      --text-primary:   #F2EFE9;
+      --text-secondary: #A8A29A;
+      --text-muted:     #6B655D;
+      --code-bg:        #08080A;
+
+      --mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Cascadia Code', monospace;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --serif: 'Source Serif 4', Georgia, serif;
+
+      /* One considered timing curve instead of the browser-default `ease`
+         keyword every transition on the page was using — a decelerating
+         curve (fast start, soft settle) reads as more deliberate than the
+         default's near-linear middle. Same curve everywhere, not tuned
+         per-element, so interactions feel like one system. */
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body {
+      background: var(--ink);
+      color: var(--text-primary);
+      font-family: var(--sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+    .section { padding: 7rem 0; }
+    @media (max-width: 720px) { .section { padding: 4.5rem 0; } }
+
+    h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em; }
+
+    .label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+    .label .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+
+    .section-title { font-size: clamp(1.75rem, 3.2vw, 2.6rem); line-height: 1.15; margin-bottom: 1rem; }
+    .section-sub { color: var(--text-secondary); font-size: 1.05rem; max-width: 680px; line-height: 1.7; }
+
+    code, .mono { font-family: var(--mono); }
+
+    /* ── Buttons ──────────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.5rem; border-radius: 3px;
+      font-family: var(--sans); font-weight: 600; font-size: 0.92rem;
+      border: 1px solid transparent; cursor: pointer; transition: all 0.2s var(--ease);
+      white-space: nowrap;
+    }
+    .btn--lg { padding: 1rem 1.75rem; font-size: 0.96rem; }
+    .btn--primary {
+      background: var(--gold); color: var(--ink-deep);
+      box-shadow: 0 2px 0 var(--gold-dim);
+    }
+    .btn--primary:hover { background: var(--gold-bright); transform: translateY(-1px); box-shadow: 0 3px 0 var(--gold-dim); }
+    .btn--outline { border-color: var(--border-lit); color: var(--text-primary); }
+    .btn--outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn--ghost { color: var(--text-secondary); border-color: var(--border); font-size: 0.85rem; padding: 0.65rem 1.1rem; }
+    .btn--ghost:hover { color: var(--text-primary); border-color: var(--border-lit); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn:disabled:hover { transform: none; box-shadow: none; }
+
+    /* ── Nav — FIX: proper collapse, no more than logo + 2 actions below 880px ─ */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,12,0.86); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__inner {
+      /* Wider than .container (1180px) on purpose: at 1180 there is no
+         viewport width, however large, where the full logo (badge + byline)
+         and full-text CTA both fit without permanently hiding branding — see
+         the FIX comment below. Widening just the nav lets the badge, byline
+         and full CTA text come back once there's genuinely enough monitor
+         width for them, instead of hiding them at every desktop size. */
+      max-width: 1560px; margin: 0 auto; padding: 0 2rem;
+      height: 80px; display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .nav__logo { display: flex; align-items: center; gap: 0.75rem; font-family: var(--serif); font-weight: 600; font-size: 1.3rem; flex-shrink: 0; }
+    .nav__logo svg { flex-shrink: 0; }
+    .nav__badge {
+      font-family: var(--mono); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 0.2rem 0.5rem; border: 1px solid var(--gold-dim); color: var(--gold);
+      border-radius: 2px; text-transform: uppercase;
+    }
+    .nav__by { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); margin-left: 0.4rem; }
+    .nav__links { display: flex; align-items: center; gap: 1.75rem; flex-shrink: 1; min-width: 0; overflow: hidden; }
+    .nav__links a {
+      font-size: 0.86rem; color: var(--text-secondary); white-space: nowrap;
+      transition: color 0.15s var(--ease);
+    }
+    .nav__links a:hover { color: var(--text-primary); }
+    .nav__actions { display: flex; gap: 0.6rem; align-items: center; flex-shrink: 0; }
+
+    /* Mobile menu toggle — hidden on desktop, shown once links collapse below */
+    .nav__toggle {
+      display: none; background: none; border: 1px solid var(--border-lit); border-radius: 3px;
+      width: 40px; height: 40px; align-items: center; justify-content: center;
+      color: var(--text-primary); cursor: pointer; flex-shrink: 0;
+    }
+    .nav__toggle svg { width: 20px; height: 20px; }
+    .nav__toggle .icon-close { display: none; }
+    .nav.nav--open .nav__toggle .icon-menu { display: none; }
+    .nav.nav--open .nav__toggle .icon-close { display: block; }
+
+    /* FIX: .nav__logo (515px, flex-shrink:0) + .nav__actions (385px,
+       flex-shrink:0) leave only .nav__links (needs 463px) to absorb the
+       deficit. At .nav__inner's old max-width:1180px, full logo + full links
+       + full actions need ~1411px + padding — never fit at ANY viewport,
+       since 1180 was a hard cap shared with .container. Raising .nav__inner
+       to max-width:1560px (see above) means the full, unhidden nav — badge,
+       byline, "Request Architecture Review", Live Demo — genuinely fits from
+       ~1500px up (measured empirically, not just computed), so it only needs
+       to go compact for the laptop-width band below that, not permanently. */
+    @media (min-width: 981px) and (max-width: 1499px) {
+      .nav__by { display: none; }
+      .nav__badge { display: none; }
+      .nav__actions .btn--primary span.full { display: none; }
+      /* !important required: the short span carries an inline
+         style="display:none" in the markup (its default off-state), which
+         beats a plain stylesheet rule regardless of media-query specificity —
+         same reason the ≤400px rule below already needs !important here. */
+      .nav__actions .btn--primary span.short { display: inline !important; }
+      .nav__links { gap: 1.25rem; }
+    }
+    /* Even with the compact treatment above, 981-1120px still runs 38px
+       short (measured: logo 244 + links 431 + actions 261 + gaps 48 = 983
+       needed vs 945 available at 1024px) — the narrowest slice before there's
+       enough width to hand back a comfortable margin. Live Demo stays
+       reachable via the hero and CTA-section links either way, so trading it
+       out of the nav only in this tight band is the smallest cut that closes
+       the gap. */
+    @media (min-width: 981px) and (max-width: 1120px) {
+      .nav__actions .btn--ghost { display: none; }
+    }
+
+    /* Collapse links first — well before the crush point the old page had */
+    @media (max-width: 980px) {
+      .nav__toggle { display: flex; }
+      .nav__links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; align-items: flex-start; gap: 0;
+        background: var(--ink); border-bottom: 1px solid var(--border);
+        padding: 0.5rem 2rem 1rem;
+      }
+      .nav.nav--open .nav__links { display: flex; }
+      .nav__links a { width: 100%; padding: 0.85rem 0; border-bottom: 1px solid var(--border); white-space: normal; }
+      .nav__links a:last-child { border-bottom: none; }
+
+      /* Compact the actions cluster the moment links collapse, so
+         logo + Live Demo + primary CTA + toggle never fight for space
+         and overflow the viewport (was clipping the CTA at ~800-900px). */
+      .nav__actions .btn--ghost { display: none; }
+      .nav__by { display: none; }
+      .nav__badge { display: none; }
+      .nav__actions .btn--primary { padding: 0.65rem 0.9rem; font-size: 0.8rem; }
+    }
+    @media (max-width: 640px) {
+      .nav__inner { padding: 0 1rem; }
+      .nav.nav--open .nav__links { padding-left: 1rem; padding-right: 1rem; }
+    }
+    @media (max-width: 400px) {
+      .nav__actions .btn--primary span.full { display: none; }
+      .nav__actions .btn--primary span.short { display: inline !important; }
+      /* FIX: logo(244px) + actions(101px) + toggle(40px) + gaps still didn't
+         fit a 375px viewport even with the CTA text shortened above — the
+         "Aegis Guard Gateway" wordmark alone was ~200px, the single biggest
+         consumer of nav width. Icon-only below 400px, same collapse pattern
+         already used for the badge/"by" text at 980px. */
+      .nav__wordmark { display: none; }
+    }
+
+    /* ── Hero ─────────────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      padding: 6rem 0 5rem;
+      overflow: hidden;
+    }
+    #hero-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      opacity: 0.5; pointer-events: none; z-index: 0;
+    }
+    .hero__inner { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+    .hero__eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid var(--gold-dim); padding: 0.4rem 0.9rem; border-radius: 2px;
+      margin-bottom: 2rem; background: rgba(201,161,74,0.05);
+    }
+    .hero__title {
+      font-size: clamp(2.4rem, 5.4vw, 4.1rem); line-height: 1.06; letter-spacing: -0.015em;
+      max-width: 780px; margin-bottom: 1.75rem;
+    }
+    .hero__title em { font-style: normal; color: var(--gold); }
+    .hero__sub { font-size: 1.15rem; color: var(--text-secondary); max-width: 640px; line-height: 1.7; margin-bottom: 2.5rem; }
+    .hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+
+    .hero__personas { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem; }
+    .hero__personas-label { font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); margin-right: 0.4rem; }
+    .hero__proof { display: flex; flex-direction: column; gap: 0.65rem; max-width: 460px; }
+    .proof-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.88rem; color: var(--text-secondary); }
+    .proof-item svg { color: var(--gold); flex-shrink: 0; }
+
+    /* ── Code sample panel ───────────────────────────────────────────────── */
+    .code-panel {
+      background: var(--code-bg); border: 1px solid var(--border-lit); border-radius: 6px;
+      overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,161,74,0.06);
+      margin-top: -2rem;
+    }
+    .code-panel__bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.7rem 1.1rem; border-bottom: 1px solid var(--border);
+      font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted);
+    }
+    .code-panel__dots { display: flex; gap: 0.4rem; }
+    .code-panel__dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--border-lit); }
+    .code-panel pre {
+      padding: 1.5rem; font-family: var(--mono); font-size: 0.82rem; line-height: 1.75;
+      overflow-x: auto; color: var(--text-secondary);
+    }
+    .code-panel .kw { color: var(--gold); }
+    .code-panel .str { color: var(--minimal); }
+    .code-panel .cmt { color: var(--text-muted); }
+    .code-panel .fn { color: #8FB8D8; }
+    .code-panel .accent { color: var(--gold-bright); font-weight: 600; }
+
+    /* ── Stat strip ───────────────────────────────────────────────────────── */
+    .stat-strip { border-bottom: 1px solid var(--border); background: var(--panel); }
+    .stat-strip__grid { max-width: 1180px; margin: 0 auto; padding: 2.75rem 2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .stat { text-align: left; border-left: 2px solid var(--border-lit); padding-left: 1.25rem; }
+    .stat__num { font-family: var(--serif); font-size: 2.1rem; color: var(--gold); font-weight: 600; line-height: 1; margin-bottom: 0.4rem; }
+    .stat__label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+    @media (max-width: 720px) { .stat-strip__grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── Compliance gap cards ────────────────────────────────────────────── */
+    .compliance-open__kicker {
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1.5rem;
+    }
+    .compliance-open__statement {
+      font-size: clamp(2rem, 4.2vw, 3.2rem); line-height: 1.15; letter-spacing: -0.01em;
+      max-width: 880px; margin-bottom: 2rem;
+    }
+    .compliance-open__note {
+      color: var(--text-secondary); font-size: 1rem; line-height: 1.75; max-width: 560px;
+      padding-left: 1.5rem; border-left: 2px solid var(--border-lit);
+    }
+    .gap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    @media (max-width: 820px) { .gap-grid { grid-template-columns: 1fr; } }
+    .gap-card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+      padding: 1.9rem;
+    }
+    /* No hover-lift: these cards don't link anywhere, so a hover affordance
+       that implies clickability was never earned. */
+    /* FIX: was a raw color emoji (grayscale-filtered, which muted but
+       didn't fix the mismatch with the surrounding legal/technical copy).
+       These four cards are a real enumerated set, so a mono numeral reuses
+       the 01/04 numbering language the architecture section already
+       establishes, rather than a decorative icon standing in for nothing. */
+    .gap-card__num {
+      font-family: var(--mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .gap-card h3 { font-family: var(--sans); font-size: 1.05rem; font-weight: 700; margin-bottom: 0.7rem; line-height: 1.4; }
+    .gap-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; }
+    .gap-card--signature { border-color: var(--gold-dim); background: linear-gradient(160deg, rgba(201,161,74,0.06), var(--panel)); }
+
+    /* ── Jurisdictions Covered ───────────────────────────────────────────── */
+    .juris-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 3rem; }
+    @media (max-width: 1024px) { .juris-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 620px) { .juris-grid { grid-template-columns: repeat(2, 1fr); } }
+    /* FIX: was an identical bordered box to .gap-card and .persona-card —
+       one card component reused three times regardless of content. These
+       six carry a real status (Active/Transitional/Upcoming) already shown
+       as a small colored text label; a left accent border in that same
+       color makes it legible at a glance and reads as registry/status data
+       rather than a marketing card. No hover-lift, same reasoning as
+       .gap-card — nothing here links anywhere. */
+    .juris-card {
+      background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--border-lit);
+      border-radius: 6px; padding: 1.5rem 1.25rem;
+    }
+    .juris-card--active { border-left-color: var(--minimal); }
+    .juris-card--transitional { border-left-color: var(--high-risk); }
+    .juris-card--upcoming { border-left-color: var(--text-muted); }
+    .juris-card__flag { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem; }
+    .juris-card h4 { font-family: var(--sans); font-size: 0.98rem; font-weight: 700; margin-bottom: 0.4rem; line-height: 1.3; }
+    .juris-card__law { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; min-height: 2.2em; }
+    .juris-card__stat { font-family: var(--mono); font-size: 0.7rem; color: var(--text-secondary); display: flex; justify-content: space-between; gap: 0.5rem; padding-top: 0.75rem; border-top: 1px dashed var(--border-lit); }
+
+    /* ── Persona deep-dives ───────────────────────────────────────────────── */
+    .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    @media (max-width: 900px) { .persona-grid { grid-template-columns: 1fr; } }
+    /* Thin gold top border marks these as the page's "choose your path"
+       cards, distinct from the reasons-list and status-registry cards
+       elsewhere that used to share this exact same box treatment. These
+       are also the only ones of the three actually anchor-linked (from the
+       hero's "Jump to what matters for your role"), so they keep the
+       weightier border-radius box the other two moved away from. */
+    .persona-card { background: var(--panel); border: 1px solid var(--border); border-top: 2px solid var(--gold); border-radius: 6px; padding: 2rem; scroll-margin-top: 100px; min-width: 0; }
+    .persona-card__role { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+    .persona-card h3 { font-family: var(--sans); font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.4; }
+    .persona-card p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.65; margin-bottom: 1.1rem; }
+    .persona-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    /* FIX: li used to be display:flex (arrow + text as two flex items) so it
+       could sit side-by-side, but the text run — mixed plain text and inline
+       <code> spans — became an anonymous flex item with the default
+       min-width:auto, which refused to shrink below its min-content even
+       though the surrounding text wraps fine on its own. That silently
+       widened this <li>, its persona-card, and the whole 1-column grid
+       track past the viewport (document.body.scrollWidth 527px against a
+       375px viewport on mobile). position:relative + absolute arrow avoids
+       flex's min-content trap entirely — plain block text always wraps to
+       its container width. */
+    .persona-list li { list-style: none; position: relative; padding-left: 1.35rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+    .persona-list li::before { content: '→'; color: var(--gold); position: absolute; left: 0; top: 0; }
+
+    /* ── Compliance check console (replaces the old 3D exploded stack) ───
+       The floating diamond had no product purpose and its hover-to-separate
+       interaction wasn't reliable — see the removed FIX comments in git
+       history. This is a functional demonstration instead: pick a sample
+       tool call, run it, watch the same four stages a real call goes
+       through, see the decision and a preview of the audit record it
+       produces. Front-end only, deterministic sample data — no API call,
+       nothing implies this is a live decision engine (see .check-badge). */
+    .check-console {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+      padding: 2rem; margin-top: 2.5rem;
+    }
+    @media (max-width: 640px) { .check-console { padding: 1.25rem; } }
+
+    /* Stepper: reuses the eyebrow/.label visual language (mono, uppercase,
+       letter-spaced, gold dot) already used for every section eyebrow on
+       this page, rather than a generic circle-and-checkmark wizard
+       control. A tick lights up once its stage of the run has happened. */
+    .check-stepper {
+      display: flex; align-items: center; margin-bottom: 2rem;
+    }
+    .check-stepper__tick {
+      flex: 1; display: flex; align-items: center; gap: 0.6rem;
+      padding-bottom: 0.85rem; border-bottom: 2px solid var(--border);
+      color: var(--text-muted); transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .check-stepper__num {
+      font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em;
+    }
+    .check-stepper__label {
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .check-stepper__tick.is-active,
+    .check-stepper__tick.is-done { color: var(--gold); border-color: var(--gold); }
+    @media (max-width: 640px) {
+      .check-stepper__label { display: none; }
+      .check-stepper__tick { justify-content: center; }
+    }
+
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+    @media (max-width: 900px) { .check-grid { grid-template-columns: 1fr; } }
+    /* FIX: grid items default to min-width:auto, so the unwrapping JSON
+       payload <pre> forced this whole column (and everything above it, up
+       to the section's overflow-x:hidden) 478px wide on a 375px viewport —
+       invisibly clipped rather than scrolling within its own code panel as
+       .code-panel pre's overflow-x:auto intends. min-width:0 lets the grid
+       track actually constrain the column so that scrollbar can do its job. */
+    .check-col { min-width: 0; }
+    .check-col__head {
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+      gap: 0.75rem; margin-bottom: 1.25rem;
+    }
+    .check-col__label {
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .check-badge {
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.04em;
+      padding: 0.3rem 0.6rem; border: 1px solid var(--border-lit); border-radius: 3px;
+      color: var(--text-muted);
+    }
+
+    /* Scenario picker: three real radio inputs styled as a segmented
+       control, all states visible at once — chosen over a <select> so the
+       current state is always readable, not hidden behind a click. */
+    .scenario-picker {
+      border: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .scenario-picker__opt {
+      position: relative; display: flex; align-items: center;
+      padding: 0.75rem 1rem; border: 1px solid var(--border-lit); border-radius: 4px;
+      font-family: var(--sans); font-size: 0.88rem; color: var(--text-secondary);
+      cursor: pointer; transition: border-color 0.15s var(--ease), color 0.15s var(--ease), background 0.15s var(--ease);
+    }
+    .scenario-picker__opt input {
+      position: absolute; opacity: 0; width: 1px; height: 1px;
+    }
+    .scenario-picker__opt:has(input:checked) {
+      border-color: var(--gold); color: var(--text-primary); background: rgba(201,161,74,0.08);
+    }
+    .scenario-picker__opt:has(input:focus-visible) {
+      outline: 2px solid var(--gold); outline-offset: 2px;
+    }
+    .scenario-picker__opt::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.75rem; flex-shrink: 0;
+      border: 1px solid var(--border-lit); transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+    }
+    .scenario-picker__opt:has(input:checked)::before { background: var(--gold); border-color: var(--gold); }
+
+    .check-field {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+      padding: 0.6rem 0; border-bottom: 1px solid var(--border); margin-bottom: 1.25rem;
+      font-size: 0.85rem;
+    }
+    .check-field__label { color: var(--text-muted); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .check-field__value { color: var(--text-primary); font-family: var(--mono); font-size: 0.82rem; text-align: right; }
+    .check-field__input {
+      flex: 1; background: none; border: none; border-bottom: 1px solid var(--border-lit);
+      color: var(--text-primary); font-family: var(--mono); font-size: 0.82rem; text-align: right;
+      padding: 0.15rem 0; min-width: 0;
+    }
+    .check-field__input:focus-visible { outline: none; border-bottom-color: var(--gold); }
+    .check-field__input::placeholder { color: var(--text-muted); }
+
+    .check-payload { margin-bottom: 0.75rem; }
+    .check-payload pre { font-size: 0.78rem; line-height: 1.7; }
+    .check-payload__input {
+      display: block; width: 100%; min-height: 140px; resize: vertical;
+      background: none; border: none; padding: 1.5rem;
+      font-family: var(--mono); font-size: 0.78rem; line-height: 1.7; color: var(--text-secondary);
+    }
+    .check-payload__input:focus-visible { outline: none; background: rgba(201,161,74,0.03); }
+    .check-error {
+      color: var(--prohibited); font-family: var(--mono); font-size: 0.75rem; margin: -0.5rem 0 1rem;
+    }
+    .check-live-note {
+      color: var(--text-muted); font-size: 0.78rem; margin: -0.75rem 0 1.25rem;
+    }
+    .check-badge--live { border-color: var(--minimal); color: var(--minimal); }
+
+    .check-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.85rem; }
+    .check-status {
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted); min-height: 1.2em;
+    }
+
+    /* Right column: the actual .record-panel/.record-row/.tier-badge
+       components already used lower on this page for the real audit-record
+       example — reused verbatim so the "signature moment" of this
+       component is watching that real artifact assemble, not a bespoke
+       result card. */
+    .check-record { min-height: 340px; }
+    .check-record__empty { color: var(--text-muted); font-family: var(--sans); font-size: 0.88rem; padding: 1rem 0; }
+    .check-record__decision { display: flex; align-items: center; gap: 0.75rem; padding-bottom: 1rem; margin-bottom: 0.5rem; border-bottom: 1px solid var(--border-lit); }
+    .check-record__decision-text { font-family: var(--sans); font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+    .check-record__justification { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.6; margin-bottom: 1rem; }
+    .check-record__row { opacity: 0; transform: translateY(4px); animation: checkRowIn 0.3s var(--ease) forwards; }
+    @keyframes checkRowIn { to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      .check-record__row { animation: none; opacity: 1; transform: none; }
+    }
+
+    .check-cta {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+      margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+    }
+    .check-cta p { color: var(--text-secondary); font-size: 0.92rem; }
+
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ── Architecture layer detail ───────────────────────────────────────── */
+    .layer-block { padding: 5rem 0; border-top: 1px solid var(--border); }
+    .layer-block__head { display: flex; align-items: baseline; gap: 1.25rem; margin-bottom: 1.25rem; }
+    .layer-block__num { font-family: var(--serif); font-size: 1.1rem; color: var(--gold); font-weight: 600; }
+    .layer-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; align-items: start; margin-top: 2rem; }
+    @media (max-width: 900px) { .layer-grid { grid-template-columns: 1fr; } }
+    .layer-grid p { color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.1rem; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+    .tag {
+      font-family: var(--mono); font-size: 0.72rem; padding: 0.35rem 0.7rem;
+      border: 1px solid var(--border-lit); border-radius: 3px; color: var(--text-secondary);
+    }
+
+    /* Flow diagram */
+    .flow-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 1.75rem; }
+    .flow-step { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-step__num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid var(--gold-dim); color: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: 0.78rem; font-weight: 700;
+    }
+    .flow-step h4 { font-family: var(--sans); font-size: 0.92rem; margin-bottom: 0.3rem; }
+    .flow-step p { color: var(--text-muted); font-size: 0.82rem; margin-bottom: 0.4rem; }
+    .flow-step code { font-size: 0.72rem; color: var(--gold-dim); background: var(--code-bg); padding: 0.15rem 0.4rem; border-radius: 2px; }
+
+    /* Score breakdown card */
+    .score-card { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .score-card__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .score-card__id { font-family: var(--mono); font-size: 0.82rem; color: var(--text-secondary); }
+    .tier-badge { font-family: var(--mono); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em; padding: 0.25rem 0.55rem; border-radius: 2px; text-transform: uppercase; }
+    .tier--prohibited { background: var(--prohibited-dim); color: var(--prohibited); }
+    .tier--high { background: var(--high-risk-dim); color: var(--high-risk); }
+    .tier--trans { background: var(--transparency-dim); color: var(--transparency); }
+    .tier--minimal { background: var(--minimal-dim); color: var(--minimal); }
+    .score-dims { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .score-dim { font-family: var(--mono); font-size: 0.7rem; color: var(--text-secondary); background: var(--code-bg); padding: 0.3rem 0.55rem; border-radius: 3px; border: 1px solid var(--border); }
+    .score-total { display: flex; justify-content: space-between; align-items: center; padding-top: 0.75rem; border-top: 1px dashed var(--border-lit); font-family: var(--mono); font-size: 0.78rem; }
+
+    /* ── Audit trail — 3D chain visual ───────────────────────────────────── */
+    .chain-wrap { perspective: 1200px; display: flex; gap: 0.4rem; padding: 2.5rem 0; overflow-x: auto; }
+    .chain-link {
+      flex-shrink: 0; width: 92px; height: 92px; border: 1px solid var(--gold-dim);
+      border-radius: 8px; background: linear-gradient(160deg, rgba(201,161,74,0.1), var(--panel));
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem;
+      transform: rotateY(18deg); transition: transform 0.35s var(--ease), border-color 0.35s var(--ease);
+    }
+    .chain-link:nth-child(even) { transform: rotateY(-18deg); }
+    .chain-link:hover { transform: rotateY(0deg) scale(1.08); border-color: var(--gold); z-index: 2; }
+    .chain-link__hash { font-family: var(--mono); font-size: 0.6rem; color: var(--gold-bright); }
+    .chain-link__n { font-family: var(--serif); font-size: 0.9rem; color: var(--text-secondary); }
+
+    .record-panel { background: var(--code-bg); border: 1px solid var(--border-lit); border-radius: 6px; padding: 1.5rem; font-family: var(--mono); font-size: 0.78rem; }
+    .record-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border); gap: 1rem; }
+    .record-row:last-child { border-bottom: none; }
+    .record-key { color: var(--text-muted); }
+    .record-val { color: var(--text-secondary); text-align: right; word-break: break-all; }
+    .record-val--flag { color: var(--prohibited); font-weight: 700; }
+    .record-val--gold { color: var(--gold); }
+
+    .control-card { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; }
+    .control-card__id { font-family: var(--mono); font-size: 0.85rem; color: var(--gold); font-weight: 700; margin-bottom: 0.5rem; }
+    .control-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── Threshold panel ──────────────────────────────────────────────────── */
+    .threshold-row { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--border); }
+    .threshold-row:last-child { border-bottom: none; }
+    .threshold-row__label { width: 130px; flex-shrink: 0; }
+    .threshold-row__bar { flex: 1; height: 6px; background: var(--code-bg); border-radius: 3px; overflow: hidden; }
+    .threshold-row__fill { height: 100%; border-radius: 3px; }
+    .threshold-row__val { font-family: var(--mono); font-size: 0.8rem; width: 50px; text-align: right; color: var(--text-secondary); }
+    .invariant-note { display: flex; gap: 0.7rem; padding: 0.9rem; background: var(--code-bg); border-left: 2px solid var(--gold); border-radius: 0 4px 4px 0; font-size: 0.83rem; color: var(--text-secondary); margin-top: 0.75rem; }
+
+    /* ── Rule ledger (statute-book grid) ─────────────────────────────────── */
+    .rules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 2.5rem; }
+    @media (max-width: 900px) { .rules-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .rules-grid { grid-template-columns: 1fr; } }
+    .rule-cell { background: var(--panel); padding: 1.25rem; transition: background 0.2s var(--ease); }
+    .rule-cell:hover { background: var(--panel-lit); }
+    .rule-id { font-family: var(--mono); font-size: 0.72rem; color: var(--gold); margin-bottom: 0.5rem; }
+    .rule-title { font-size: 0.87rem; margin-bottom: 0.7rem; line-height: 1.4; }
+    .rule-meta { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 0.68rem; }
+    .rule-art { color: var(--text-muted); }
+    /* FIX: the regulatory-intelligence source list reused .rule-cell with
+       only 2 of its 4 fields filled (no rule-id, no tier-badge), so next to
+       the dense 27-rule table using the same component it read as a bare
+       name-and-caption grid — a directory/logo-wall pattern that doesn't
+       say anything about what these actually are. They're live feeds a
+       scheduled Watch Loop polls, so a small monitored-status dot (the same
+       marker device as the section eyebrows, just green for "live" instead
+       of gold) says that directly instead of leaving it to the body copy. */
+    .rule-cell--source .rule-title { display: flex; align-items: center; gap: 0.55rem; }
+    .rule-cell--source .rule-title::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+      background: var(--minimal); box-shadow: 0 0 6px var(--minimal);
+    }
+    .ndpa-divider { border-top: 1px solid var(--gold-dim); margin-top: 3rem; padding-top: 2.5rem; }
+
+    /* ── Rule coverage summary table ─────────────────────────────────────── */
+    .coverage-table { width: 100%; border-collapse: collapse; margin-top: 2.5rem; border: 1px solid var(--border); background: var(--panel); }
+    .coverage-table th { text-align: left; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-lit); }
+    .coverage-table td { padding: 1rem 1.1rem; border-bottom: 1px solid var(--border); font-size: 0.87rem; color: var(--text-secondary); vertical-align: top; }
+    .coverage-table tr:last-child td { border-bottom: none; }
+    .coverage-table .num { font-family: var(--serif); color: var(--gold); font-weight: 600; font-size: 1.05rem; }
+    @media (max-width: 700px) { .coverage-table { display: block; overflow-x: auto; } }
+
+    /* ── Timeline (docket style) ──────────────────────────────────────────── */
+    .docket { border-left: 2px solid var(--border-lit); padding-left: 2rem; margin-top: 2.5rem; }
+    .docket-item { position: relative; padding-bottom: 2.5rem; }
+    .docket-item:last-child { padding-bottom: 0; }
+    .docket-item::before {
+      content: ''; position: absolute; left: -2.42rem; top: 0.3rem;
+      width: 11px; height: 11px; border-radius: 50%; background: var(--ink); border: 2px solid var(--gold);
+    }
+    .docket-item--active::before { background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+    .docket-date { font-family: var(--mono); font-size: 0.72rem; color: var(--gold); letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+    .docket-title { font-family: var(--sans); font-weight: 700; font-size: 1.02rem; margin-bottom: 0.5rem; }
+    .docket-body { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; max-width: 640px; }
+    .docket-tag { font-family: var(--mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em; padding: 0.15rem 0.45rem; border-radius: 2px; text-transform: uppercase; margin-left: 0.6rem; border: 1px solid currentColor; }
+
+    /* ── CTA ──────────────────────────────────────────────────────────────── */
+    .cta-section { padding: 7rem 0; text-align: center; border-top: 1px solid var(--border); position: relative; overflow: hidden; }
+    .cta-section::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 500px; background: radial-gradient(ellipse at top, rgba(201,161,74,0.1), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .cta-heading { font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.15; letter-spacing: -0.01em; margin: 0; }
+    .cta-heading em { font-style: normal; color: var(--gold); }
+    .cta-section p { color: var(--text-secondary); font-size: 1.02rem; line-height: 1.75; margin: 1.5rem 0 2.5rem; }
+    .cta-brief {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem;
+      text-align: left; margin-bottom: 2rem; font-size: 0.85rem; color: var(--text-secondary);
+    }
+    .cta-brief__label {
+      display: block; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem;
+    }
+    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.75rem; }
+    .cta-fine { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+
+    /* ── Trust strip + footer ────────────────────────────────────────────── */
+    .trust-strip { border-top: 1px solid var(--border); padding: 1.75rem 0; background: var(--panel); }
+    .trust-strip__inner { max-width: 1180px; margin: 0 auto; padding: 0 2rem; display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
+    .trust-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); }
+    .trust-item svg { color: var(--gold-dim); }
+
+    footer { padding: 3rem 0; border-top: 1px solid var(--border); }
+    .footer__inner { max-width: 1180px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+    .footer__brand { font-family: var(--serif); font-size: 0.95rem; color: var(--text-secondary); min-width: 0; }
+    .footer__links { display: flex; flex-wrap: wrap; gap: 1.75rem; font-size: 0.85rem; }
+    .footer__links a { color: var(--text-muted); }
+    .footer__links a:hover { color: var(--gold); }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+    }
+
+    /* Focus visibility */
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────────────────────── -->
+<nav class="nav" id="mainNav">
+  <div class="nav__inner">
+    <div class="nav__logo">
+      <svg width="34" height="35" viewBox="0 0 124 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Adesanya AI Advisory">
+        <defs>
+          <linearGradient id="navLogoGold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#E8C77B"/>
+            <stop offset="0.5" stop-color="#C9A14A"/>
+            <stop offset="1" stop-color="#A87B2E"/>
+          </linearGradient>
+          <linearGradient id="navLogoNavy" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#16243F"/>
+            <stop offset="1" stop-color="#0C1729"/>
+          </linearGradient>
+        </defs>
+        <path d="M62 4 L116 22 C116 70 100 110 62 124 C24 110 8 70 8 22 Z" fill="url(#navLogoNavy)" stroke="url(#navLogoGold)" stroke-width="4"/>
+        <path d="M62 36 L82 86 L70 86 L66 75 L58 75 L54 86 L42 86 Z" fill="url(#navLogoGold)"/>
+        <path d="M60 58 L64 58 L66 68 L58 68 Z" fill="url(#navLogoNavy)"/>
+        <circle cx="62" cy="30" r="3.6" fill="url(#navLogoGold)"/>
+      </svg>
+      <span class="nav__wordmark">Aegis Guard Gateway</span>
+      <span class="nav__badge">Enterprise</span>
+      <span class="nav__by">by Adesanya AI Advisory</span>
+    </div>
+    <div class="nav__links">
+      <a href="#jurisdictions">Jurisdictions</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#rules">Rule Engine</a>
+      <a href="#audit">Audit Trail</a>
+      <a href="/pricing.html" style="color:var(--gold);font-weight:600;">Pricing</a>
+    </div>
+    <div class="nav__actions">
+      <a href="https://aegis-guard-gateway.onrender.com" target="_blank" rel="noopener" class="btn btn--ghost">Live Demo ↗</a>
+      <a href="#cta" class="btn btn--primary"><span class="full">Request Architecture Review</span><span class="short" style="display:none;">Get Started</span></a>
+    </div>
+    <button type="button" class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+      <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <canvas id="hero-canvas" class="code-rain" aria-hidden="true"></canvas>
+  <div class="hero__inner">
+    <div class="hero__eyebrow">Multi-Jurisdiction AI Compliance &nbsp;·&nbsp; ISO/IEC 42001 &nbsp;·&nbsp; MCP Native</div>
+    <h1 class="hero__title">The compliance guardrail your <em>AI agent fleet</em> cannot operate without</h1>
+    <p class="hero__sub">One MCP interceptor screening every tool call against 27 pre-mapped rules across six jurisdictions — deterministically, before execution, with an audit trail your DPO can hand a regulator.</p>
+    <div class="hero__actions">
+      <a href="#cta" class="btn btn--primary btn--lg">Request an Architecture Review</a>
+      <a href="#architecture" class="btn btn--outline btn--lg">See How It Works</a>
+    </div>
+    <div class="hero__personas">
+      <span class="hero__personas-label">Jump to what matters for your role:</span>
+      <a href="#persona-dpo" class="btn btn--ghost">For DPOs</a>
+      <a href="#persona-ciso" class="btn btn--ghost">For CISOs</a>
+      <a href="#persona-eng" class="btn btn--ghost">For Engineering</a>
+    </div>
+    <div class="hero__proof">
+      <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>27 rules pre-mapped across EU, Nigeria, UK, Singapore, Egypt &amp; Colorado</div>
+      <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Zero-config ISO 42001 Annex A control tagging</div>
+      <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Single decorator. No agent rewrite required.</div>
+      <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>HMAC-SHA256 audit records, SIEM-ready</div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="code-panel">
+    <div class="code-panel__bar">
+      <span>tools/your_enterprise_tool.py</span>
+      <div class="code-panel__dots"><span></span><span></span><span></span></div>
+    </div>
+    <pre><span class="cmt"># Before Aegis Guard — opaque, unaudited, non-compliant</span>
+@mcp.tool()
+<span class="kw">async def</span> <span class="fn">screen_candidates</span>(payload: dict) -> dict:
+    <span class="kw">return</span> hiring_pipeline.evaluate(payload)
+
+<span class="cmt"># ─────────────────────────────────────────────────────────────────
+# After — one import, one decorator. Full EU AI Act Article 6 coverage.</span>
+<span class="kw">from</span> aegis_guard <span class="kw">import</span> compliance_gate
+
+@mcp.tool()
+<span class="accent">@compliance_gate</span>        <span class="cmt"># ← intercepts, classifies, blocks, and signs</span>
+<span class="kw">async def</span> <span class="fn">screen_candidates</span>(payload: dict) -> dict:
+    <span class="kw">return</span> hiring_pipeline.evaluate(payload)
+
+<span class="cmt"># Every call now produces a signed AuditRecord:
+# {
+#   "risk_tier": "HIGH_RISK",  "article": "Article 6(2) + Annex III §4",
+#   "iso_controls": ["A.6.1.2", "A.9.2"],  "is_blocked": true,
+#   "hmac_sha256": "a3f8…c91d",  "confidence": 0.95
+# }</span></pre>
+  </div>
+</div>
+
+<!-- ── STAT STRIP ──────────────────────────────────────────────────────────── -->
+<div class="stat-strip">
+  <div class="stat-strip__grid">
+    <div class="stat"><div class="stat__num">27</div><div class="stat__label">Rules Wired — 21 EU + 2 Nigeria NDPA + 1 UK + 1 Singapore + 1 Egypt + 1 Colorado</div></div>
+    <div class="stat"><div class="stat__num">4</div><div class="stat__label">Scoring Dimensions Per Evaluation</div></div>
+    <div class="stat"><div class="stat__num">ISO 42001</div><div class="stat__label">Annex A Controls Auto-Tagged</div></div>
+    <div class="stat"><div class="stat__num">39</div><div class="stat__label">Annex A Controls In The Registry</div></div>
+  </div>
+</div>
+
+<!-- ── JURISDICTIONS COVERED ───────────────────────────────────────────────── -->
+<section class="section" id="jurisdictions" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="label"><span class="dot"></span>Jurisdictions Covered</div>
+    <h2 class="section-title">Six jurisdictions, one engine, zero configuration</h2>
+    <p class="section-sub">Aegis Guard doesn't just cover the EU AI Act. Every jurisdiction below is built on real, binding law — verified against primary-source legal text, not policy drafts or non-binding frameworks — and the rule set keeps growing as new jurisdictions are researched and activated. Five are already enforceable today; Colorado's is wired ahead of its 1 January 2027 effective date, flagged as a forward-looking risk rather than a live violation until then.</p>
+
+    <div class="juris-grid">
+      <div class="juris-card juris-card--active">
+        <div class="juris-card__flag">European Union</div>
+        <h4>AI Act</h4>
+        <div class="juris-card__law">Regulation (EU) 2024/1689 — in force since Aug 2024</div>
+        <div class="juris-card__stat"><span>21 rules</span><span style="color:var(--minimal);">Active</span></div>
+      </div>
+      <div class="juris-card juris-card--active">
+        <div class="juris-card__flag">United Kingdom</div>
+        <h4>UK GDPR · DUAA 2025</h4>
+        <div class="juris-card__law">Data (Use and Access) Act 2025, s.80 — live since 5 Feb 2026</div>
+        <div class="juris-card__stat"><span>1 rule</span><span style="color:var(--minimal);">Active</span></div>
+      </div>
+      <div class="juris-card juris-card--active">
+        <div class="juris-card__flag">Nigeria</div>
+        <h4>NDPA 2023</h4>
+        <div class="juris-card__law">Nigeria Data Protection Act 2023, ss.36 &amp; 41–43</div>
+        <div class="juris-card__stat"><span>2 rules</span><span style="color:var(--minimal);">Active</span></div>
+      </div>
+      <div class="juris-card juris-card--active">
+        <div class="juris-card__flag">Singapore</div>
+        <h4>PDPA 2012</h4>
+        <div class="juris-card__law">Personal Data Protection Act 2012, s.16</div>
+        <div class="juris-card__stat"><span>1 rule</span><span style="color:var(--minimal);">Active</span></div>
+      </div>
+      <div class="juris-card juris-card--transitional">
+        <div class="juris-card__flag">Egypt</div>
+        <h4>PDPL 2020</h4>
+        <div class="juris-card__law">Law No. 151/2020, Art. 17 — grace period ends ~Nov 2026</div>
+        <div class="juris-card__stat"><span>1 rule</span><span style="color:var(--high-risk);">Transitional</span></div>
+      </div>
+      <div class="juris-card juris-card--upcoming">
+        <div class="juris-card__flag">Colorado, US</div>
+        <h4>SB26-189 ADMT Act</h4>
+        <div class="juris-card__law">Automated Decision-Making Technology Act — not in force until 1 Jan 2027</div>
+        <div class="juris-card__stat"><span>1 rule</span><span style="color:var(--text-muted);">Upcoming</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPLIANCE GAP ──────────────────────────────────────────────────────── -->
+<section class="section" id="compliance">
+  <div class="container">
+    <!-- Every other section on this page opens eyebrow-dot -> h2 -> sub
+         paragraph, identically, eight times down the page. This is the
+         stakes section - deliberately breaking that formula here: a bigger,
+         isolated statement instead of a same-weight heading, the kicker
+         demoted to plain text instead of the bordered/dotted eyebrow pill,
+         and the supporting paragraph set apart as a marginal note rather
+         than continuing at the same visual weight as the statement above it. -->
+    <div class="compliance-open">
+      <div class="compliance-open__kicker">The Compliance Gap</div>
+      <h2 class="compliance-open__statement">Your AI agents are making consequential decisions.<br>Today, nobody can prove they shouldn't have.</h2>
+      <p class="compliance-open__note">The EU AI Act came into force in August 2024, the UK's new automated-decision regime since 5 February 2026, and Nigeria, Singapore, and Egypt already enforce their own data-protection duties on automated processing. Every automated decision touching employment, credit, healthcare access, marketing, or biometric data is now a regulated event in at least one jurisdiction you operate in — whether your legal team knows the tool exists or not.</p>
+    </div>
+
+    <div class="gap-grid">
+      <div class="gap-card">
+        <div class="gap-card__num">01</div>
+        <h3>Article 5 Violations Are Invisible Until They Are Front-Page News</h3>
+        <p>Subliminal manipulation, social scoring, real-time biometric surveillance in public spaces — Article 5 prohibited uses are absolute bans with fines up to €35M or 7% of global turnover. Without interception at the point of execution, your agents may already be crossing these lines.</p>
+      </div>
+      <div class="gap-card">
+        <div class="gap-card__num">02</div>
+        <h3>High-Risk Annex III Systems Require Explainable, Auditable Decisions</h3>
+        <p>CV screening, credit scoring, student assessment, law enforcement analytics — eight Annex III categories require full documentation of AI decision logic. A log file is not an audit trail. A JSONL record without cryptographic integrity proof is inadmissible evidence of compliance.</p>
+      </div>
+      <div class="gap-card">
+        <div class="gap-card__num">03</div>
+        <h3>Regulators Are Moving to Automated Discovery</h3>
+        <p>The EU AI Office is building tool-call-level inspection capability. MCP and agent frameworks are specifically in scope. "We didn't know the tool existed" is not a viable defence when your model context protocol server is actively running high-risk classification pipelines.</p>
+      </div>
+      <div class="gap-card">
+        <div class="gap-card__num">04</div>
+        <h3>ISO 42001 Requires a Documented AI Management System</h3>
+        <p>Enterprise certification programmes increasingly require ISO/IEC 42001 conformance. Annex A mandates explicit control mappings for AI risk (A.6.1), governance (A.9.2), and operational monitoring (A.10.1). Manual mapping exercises become instantly stale when your agent fleet evolves weekly.</p>
+      </div>
+    </div>
+
+    <div class="gap-card gap-card--signature" style="margin-top:1.5rem;">
+      <h3 style="font-size:1.2rem;">Aegis Guard Gateway: Compliance at the Point of Execution</h3>
+      <p style="margin-bottom:1.25rem;">Rather than auditing outputs after the fact, Aegis Guard intercepts every JSON-RPC tool call at the point of execution — before your tool's own business logic runs — classifying the intent, blocking prohibited operations, and writing a cryptographically signed audit record in a single atomic operation. Your compliance posture is enforced, not reported.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+        <div style="font-size:0.85rem;color:var(--text-secondary);"><strong style="color:var(--gold);">Prevent, not detect.</strong> Hard blocks on PROHIBITED-tier operations execute before the downstream tool function runs.</div>
+        <div style="font-size:0.85rem;color:var(--text-secondary);"><strong style="color:var(--gold);">Evidence-grade records.</strong> Every evaluation produces an HMAC-SHA256 signed record suitable for regulatory submission.</div>
+        <div style="font-size:0.85rem;color:var(--text-secondary);"><strong style="color:var(--gold);">Continuous ISO mapping.</strong> Annex A control IDs are injected into every audit record without configuration.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PERSONA DEEP-DIVES ──────────────────────────────────────────────────── -->
+<section class="section" id="personas" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="label"><span class="dot"></span>Built For Your Role</div>
+    <h2 class="section-title">One deployment, three stakeholders satisfied</h2>
+    <p class="section-sub">Compliance tooling usually forces a trade-off between what Legal needs, what Security will approve, and what Engineering will actually ship. Aegis Guard is designed so none of the three has to compromise.</p>
+
+    <div class="persona-grid">
+      <div class="persona-card" id="persona-dpo">
+        <div class="persona-card__role">For Data Protection Officers</div>
+        <h3>Evidence you can hand a regulator, not a log file you have to explain</h3>
+        <p>Every evaluation — block, flag, or clean pass — produces a signed, timestamped record mapped to the exact statute and control that triggered it.</p>
+        <ul class="persona-list">
+          <li>HMAC-SHA256 sealed records, tamper-evident by construction, not by policy.</li>
+          <li>Every record cites its governing Article or statute section directly.</li>
+          <li>ISO/IEC 42001 Annex A controls attached automatically, no manual mapping.</li>
+          <li>Coverage across six jurisdictions in one register, not six spreadsheets.</li>
+        </ul>
+      </div>
+      <div class="persona-card" id="persona-ciso">
+        <div class="persona-card__role">For CISOs &amp; Security Leads</div>
+        <h3>A control you can approve without opening a new attack surface</h3>
+        <p>Aegis Guard runs in-process, inside your own perimeter — no payload ever leaves your environment to reach a third-party classifier.</p>
+        <ul class="persona-list">
+          <li>On-premise, VPC, and air-gapped deployment options, no vendor data path.</li>
+          <li>Deterministic scoring — no LLM-in-the-loop, no prompt-injection surface to defend.</li>
+          <li>Per-tier thresholds you control, with hard-blocked invariants at startup.</li>
+          <li>SIEM-ready webhook export for your existing detection and response pipeline.</li>
+        </ul>
+      </div>
+      <div class="persona-card" id="persona-eng">
+        <div class="persona-card__role">For Engineering</div>
+        <h3>One decorator. No agent rewrite. Ships in an afternoon.</h3>
+        <p>Aegis Guard instruments an existing FastMCP tool without touching its business logic — you add an import and a decorator, nothing else moves.</p>
+        <ul class="persona-list">
+          <li><code>@compliance_gate</code> wraps any <code>@mcp.tool()</code> function directly, in place.</li>
+          <li>Fully deterministic scoring — every classification is reproducible from the raw payload.</li>
+          <li>No new infrastructure to run: it executes in-process on every tool call.</li>
+          <li>Typed, tested Python — 253 passing tests across the full suite.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARCHITECTURE ────────────────────────────────────────────────────────── -->
+<!-- overflow-x:hidden — the 3D exploded-stack visualization's rotateX/rotateZ
+     transform projects its layers past the section's own box on narrow
+     viewports; without clipping here that expanded document.body.scrollWidth
+     (527px against a 375px viewport) and let mobile visitors swipe the whole
+     page sideways into a broken state. Same containment .coverage-table and
+     .chain-wrap already get via overflow-x:auto, and #cta already gets via
+     this same overflow-x:hidden. -->
+<section class="section" id="architecture" style="border-top:1px solid var(--border); overflow-x:hidden;">
+  <div class="container">
+    <div class="label"><span class="dot"></span>Technical Architecture</div>
+    <h2 class="section-title">Four layers that make a legally defensible compliance system</h2>
+    <p class="section-sub">Run a sample tool call through the pipeline below and watch each layer respond, in the same order it runs on every real call.</p>
+
+    <div class="check-console" id="checkConsole">
+      <div class="check-stepper" aria-hidden="true">
+        <div class="check-stepper__tick" data-tick="1"><span class="check-stepper__num">01</span><span class="check-stepper__label">Intercept</span></div>
+        <div class="check-stepper__tick" data-tick="2"><span class="check-stepper__num">02</span><span class="check-stepper__label">Score</span></div>
+        <div class="check-stepper__tick" data-tick="3"><span class="check-stepper__num">03</span><span class="check-stepper__label">Decide</span></div>
+        <div class="check-stepper__tick" data-tick="4"><span class="check-stepper__num">04</span><span class="check-stepper__label">Record</span></div>
+      </div>
+
+      <div class="check-grid">
+        <div class="check-col">
+          <div class="check-col__head">
+            <span class="check-col__label">Sample Tool Call</span>
+            <span class="check-badge" id="checkBadge">Front-end demonstration · sample data</span>
+          </div>
+
+          <fieldset class="scenario-picker">
+            <legend class="visually-hidden">Choose a sample scenario</legend>
+            <label class="scenario-picker__opt">
+              <input type="radio" name="scenario" value="safe" checked>
+              <span>Safe tool call</span>
+            </label>
+            <label class="scenario-picker__opt">
+              <input type="radio" name="scenario" value="high">
+              <span>High-risk tool call</span>
+            </label>
+            <label class="scenario-picker__opt">
+              <input type="radio" name="scenario" value="prohibited">
+              <span>Prohibited tool call</span>
+            </label>
+            <label class="scenario-picker__opt">
+              <input type="radio" name="scenario" value="custom">
+              <span>Try your own</span>
+            </label>
+          </fieldset>
+
+          <div class="check-field">
+            <label class="check-field__label" for="checkToolNameInput">Tool name</label>
+            <code class="check-field__value" id="checkToolName">search_public_guidance</code>
+            <input class="check-field__input" id="checkToolNameInput" type="text" maxlength="256"
+                   placeholder="e.g. screen_loan_applicants" hidden>
+          </div>
+
+          <div class="code-panel check-payload">
+            <div class="code-panel__bar">
+              <div class="code-panel__dots"><span></span><span></span><span></span></div>
+              <span>tools/call payload</span>
+            </div>
+            <pre id="checkPayload"></pre>
+            <textarea class="check-payload__input" id="checkPayloadInput" spellcheck="false" hidden></textarea>
+          </div>
+          <p class="check-error" id="checkError" role="alert" hidden></p>
+
+          <!-- Real POST to the actual production engine (see
+               aegis_guard/demo/server.py — CORS is deliberately open,
+               rate-limited server-side, never persists input). Only this
+               "Try your own" mode calls it; the three sample scenarios
+               above stay fully local, no network request. -->
+          <p class="check-live-note" id="checkLiveNote" hidden>Runs the real Aegis Guard engine live. Nothing you submit is stored.</p>
+
+          <div class="check-actions">
+            <button type="button" class="btn btn--primary" id="checkRunBtn">Run compliance check</button>
+            <button type="button" class="btn btn--outline" id="checkResetBtn">Reset</button>
+          </div>
+          <p class="check-status" id="checkStatus" role="status" aria-live="polite">READY</p>
+        </div>
+
+        <div class="check-col">
+          <div class="check-col__head">
+            <span class="check-col__label">Decision Output</span>
+          </div>
+          <!-- Static default: the safe scenario's full result, so this is
+               a real, complete example even with no JavaScript. JS swaps
+               this to the interactive "run to see" state on load, then
+               re-renders it from the scenario data on every run. -->
+          <div class="record-panel check-record" id="checkRecord">
+            <div class="check-record__decision">
+              <span class="tier-badge tier--minimal">Allow</span>
+              <span class="check-record__decision-text">Downstream tool permitted</span>
+            </div>
+            <div class="record-row"><span class="record-key">request_id</span><span class="record-val">req-1a4c-77e2</span></div>
+            <div class="record-row"><span class="record-key">tool_name</span><span class="record-val">search_public_guidance</span></div>
+            <div class="record-row"><span class="record-key">risk_tier</span><span class="record-val">MINIMAL</span></div>
+            <div class="record-row"><span class="record-key">rule_matches</span><span class="record-val">None</span></div>
+            <div class="record-row"><span class="record-key">hmac_sha256</span><span class="record-val record-val--gold">b71e4f2a…3c88d015</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="check-cta">
+      <p>See how this maps to your environment.</p>
+      <a href="https://adesanyaaiadvisory.com/intake" class="btn btn--outline">Request an Architecture Review</a>
+    </div>
+  </div>
+
+  <div class="container layer-block">
+    <div class="layer-block__head"><span class="layer-block__num">01 / 04</span><h3>The Real-Time JSON-RPC Interceptor Layer</h3></div>
+    <div class="layer-grid">
+      <div>
+        <p>Aegis Guard inserts itself at the <strong style="color:var(--gold);">MCP tool-invocation boundary</strong> using a single <code>@compliance_gate</code> decorator. Every <code>tools/call</code> JSON-RPC request is intercepted before Python execution begins. Tool name, all key paths, all nested values, and semantic conjunctions are extracted as structured signal vectors.</p>
+        <p>Existing agent implementations require no modification to business logic. One import and one decorator instruments an entire MCP server in under five minutes. The interceptor is deployed in your environment — no traffic leaves your perimeter.</p>
+        <div class="tag-row">
+          <span class="tag">@compliance_gate</span><span class="tag">JSON-RPC 2.0</span><span class="tag">In-process</span><span class="tag">Zero agent rewrite</span><span class="tag">FastMCP native</span>
+        </div>
+      </div>
+      <div class="flow-panel">
+        <div class="flow-step"><div class="flow-step__num">1</div><div><h4>LLM Client Issues tools/call</h4><p>Claude Desktop / OpenAI / custom agent sends JSON-RPC request to your MCP server.</p><code>{"method": "tools/call", "params": {...}}</code></div></div>
+        <div class="flow-step"><div class="flow-step__num">2</div><div><h4>@compliance_gate Intercepts</h4><p>Payload is extracted before the decorated tool function is invoked.</p><code>_extract_all_text(payload) → signals</code></div></div>
+        <div class="flow-step"><div class="flow-step__num">3</div><div><h4>Rule Engine Evaluates</h4><p>All wired rules evaluated in-process. PROHIBITED tier triggers an immediate block.</p><code>_run_all_rules(tool_name, payload)</code></div></div>
+        <div class="flow-step"><div class="flow-step__num">4</div><div><h4>Signed Audit Record Written</h4><p>HMAC-SHA256 record appended to append-only JSONL log. Optionally forwarded to your SIEM via webhook.</p><code>AuditRecord.from_compliance_result()</code></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container layer-block">
+    <div class="layer-block__head"><span class="layer-block__num">02 / 04</span><h3>Deterministic 4-Dimension Risk Scoring Engine</h3></div>
+    <div class="layer-grid">
+      <div>
+        <p>Unlike probabilistic LLM-based classifiers, Aegis Guard uses a fully deterministic, explainable scoring model with four independent signal dimensions. Each dimension has a fixed maximum contribution weight, making every classification decision independently auditable and reproducible from the raw payload alone.</p>
+        <p>The engine evaluates every wired rule simultaneously — the 21 EU AI Act rules, Nigeria's NDPA 2023 rules, the UK's Data (Use and Access) Act 2025 rule, Singapore's PDPA 2012 rule, Egypt's PDPL rule, and Colorado's SB26-189 rule (wired now for forward-looking flagging; the underlying law itself isn't enforceable until 1 Jan 2027) — through the same scoring model. Every match returns a <code>ScoreBreakdown</code> object logging each dimension's contribution, the pre-clamp total, and whether an exception pattern reduced the score.</p>
+        <div class="tag-row">
+          <span class="tag">TOOL_NAME_STRUCTURAL +0.40</span><span class="tag">KEY_PATH_STRUCTURAL +0.25</span><span class="tag">CONTENT +0.20</span><span class="tag">CONJUNCTION +0.50</span><span class="tag">EXCEPTION −0.30</span>
+        </div>
+      </div>
+      <div>
+        <div class="score-card">
+          <div class="score-card__head"><span class="score-card__id">PROH-ART5-1H</span><span class="tier-badge tier--prohibited">Prohibited</span></div>
+          <div class="score-dims"><span class="score-dim">TOOL_NAME +0.40</span><span class="score-dim">KEY_PATH +0.25</span><span class="score-dim">CONTENT +0.20</span><span class="score-dim">CONJUNCTION +0.50</span></div>
+          <div class="score-total"><span>1.35 pre-clamp → <strong style="color:var(--gold);">1.00 final</strong></span><span style="color:var(--prohibited);font-weight:700;">BLOCK</span></div>
+        </div>
+        <div class="score-card">
+          <div class="score-card__head"><span class="score-card__id">HIGH-A3-S4-EMPLOY</span><span class="tier-badge tier--high">High Risk</span></div>
+          <div class="score-dims"><span class="score-dim">TOOL_NAME +0.40</span><span class="score-dim">CONJUNCTION +0.50</span></div>
+          <div class="score-total"><span>Final confidence <strong style="color:var(--gold);">0.90</strong></span><span style="color:var(--high-risk);font-weight:700;">FLAGGED</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container layer-block" id="audit">
+    <div class="layer-block__head"><span class="layer-block__num">03 / 04</span><h3>Tamper-Evident Audit Trail with ISO 42001 Annex A Mapping</h3></div>
+    <p style="color:var(--text-secondary);max-width:760px;line-height:1.75;margin-top:1.5rem;">Every compliance evaluation — whether it results in a block, a flag, or a clean pass — generates an AuditRecord sealed with HMAC-SHA256 using a 32-byte minimum secret. The hash covers the canonical serialisation of the full record, making any post-hoc tampering immediately detectable. Each signed record can chain to the one before it in the same workflow — turn each link below to see the idea.</p>
+
+    <div class="chain-wrap">
+      <div class="chain-link"><div class="chain-link__n">#4818</div><div class="chain-link__hash">a3f8…</div></div>
+      <div class="chain-link"><div class="chain-link__n">#4819</div><div class="chain-link__hash">7c91…</div></div>
+      <div class="chain-link"><div class="chain-link__n">#4820</div><div class="chain-link__hash">e2b4…</div></div>
+      <div class="chain-link" style="border-color:var(--gold);"><div class="chain-link__n">#4821</div><div class="chain-link__hash">c91d…</div></div>
+      <div class="chain-link"><div class="chain-link__n">#4822</div><div class="chain-link__hash">5f7a…</div></div>
+      <div class="chain-link"><div class="chain-link__n">#4823</div><div class="chain-link__hash">b2c4…</div></div>
+    </div>
+
+    <div class="layer-grid" style="margin-top:1rem;">
+      <div class="record-panel">
+        <div class="record-row"><span class="record-key">request_id</span><span class="record-val">req-8f3a-91cd-4e22</span></div>
+        <div class="record-row"><span class="record-key">tool_name</span><span class="record-val">live_facial_recognition_cctv</span></div>
+        <div class="record-row"><span class="record-key">action</span><span class="record-val record-val--flag">CALL_BLOCKED</span></div>
+        <div class="record-row"><span class="record-key">risk_tier</span><span class="record-val record-val--flag">PROHIBITED</span></div>
+        <div class="record-row"><span class="record-key">top_rule_id</span><span class="record-val">PROH-ART5-1H</span></div>
+        <div class="record-row"><span class="record-key">article_ref</span><span class="record-val">Article 5(1)(h)</span></div>
+        <div class="record-row"><span class="record-key">iso_42001_controls</span><span class="record-val">["A.6.1.2","A.9.2","A.10.1"]</span></div>
+        <div class="record-row"><span class="record-key">hmac_sha256</span><span class="record-val record-val--gold">a3f8c9d1…9e1d3f5a</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.9rem;">
+        <div class="control-card"><div class="control-card__id">A.6.1.2</div><p>AI risk assessment — mandatory risk evaluation for high-impact AI operations</p></div>
+        <div class="control-card"><div class="control-card__id">A.9.2</div><p>Human oversight — controls for human review of AI-generated decisions</p></div>
+        <div class="control-card"><div class="control-card__id">A.10.1</div><p>Operational monitoring — continuous surveillance of AI system behaviour</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container layer-block">
+    <div class="layer-block__head"><span class="layer-block__num">04 / 04</span><h3>Configurable Per-Tier Threshold Overrides</h3></div>
+    <div class="layer-grid">
+      <div>
+        <p>Every enterprise has a different risk tolerance. A financial institution subject to FCA scrutiny may need stricter detection than a research lab operating under academic exemptions. Aegis Guard's operator threshold system lets your CISO dial sensitivity per EU AI Act tier without touching a single rule definition.</p>
+        <p>Three environment variables override the engine's per-rule confidence floor at runtime. Production environments enforce a safety invariant: thresholds cannot be inverted, and observe-only mode for PROHIBITED operations is hard-blocked.</p>
+      </div>
+      <div>
+        <div class="threshold-row"><div class="threshold-row__label"><span class="tier-badge tier--prohibited">Prohibited</span></div><div class="threshold-row__bar"><div class="threshold-row__fill" style="width:50%;background:var(--prohibited);"></div></div><div class="threshold-row__val">0.50</div></div>
+        <div class="threshold-row"><div class="threshold-row__label"><span class="tier-badge tier--high">High Risk</span></div><div class="threshold-row__bar"><div class="threshold-row__fill" style="width:45%;background:var(--high-risk);"></div></div><div class="threshold-row__val">0.45</div></div>
+        <div class="threshold-row"><div class="threshold-row__label"><span class="tier-badge tier--trans">Transparency</span></div><div class="threshold-row__bar"><div class="threshold-row__fill" style="width:40%;background:var(--transparency);"></div></div><div class="threshold-row__val">0.40</div></div>
+        <div class="threshold-row"><div class="threshold-row__label"><span class="tier-badge tier--minimal">Minimal</span></div><div class="threshold-row__bar"><div class="threshold-row__fill" style="width:100%;background:var(--minimal);"></div></div><div class="threshold-row__val">1.00</div></div>
+        <div class="invariant-note">Production guard: <strong>PROHIBITED &lt; TRANSPARENCY</strong> raises a hard ValidationError — inverted thresholds are rejected at startup.</div>
+        <div class="invariant-note">Production guard: observe-only mode for PROHIBITED operations cannot be silently enabled — rejected at startup, not just discouraged.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RULE LEDGER ─────────────────────────────────────────────────────────── -->
+<section class="section" id="rules" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="label"><span class="dot"></span>Pre-Mapped Rule Coverage</div>
+    <h2 class="section-title">27 rules across six jurisdictions. Zero configuration.</h2>
+    <p class="section-sub">Every rule shipped with Aegis Guard is pre-mapped to its governing Article or statute, risk tier, and ISO 42001 Annex A controls. Your compliance team does not write detection logic. They configure thresholds and review evidence.</p>
+
+    <table class="coverage-table">
+      <thead>
+        <tr><th>Tier</th><th>Rules</th><th>Jurisdictions</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tier-badge tier--prohibited">Prohibited</span></td>
+          <td class="num">8</td>
+          <td>EU</td>
+          <td>Real-time remote biometric identification in public spaces (Art. 5(1)(h))</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge tier--high">High Risk</span></td>
+          <td class="num">17</td>
+          <td>EU · UK · Nigeria · Singapore · Egypt · Colorado</td>
+          <td>Employment, HR &amp; recruitment scoring (Annex III §4); cross-jurisdiction automated-decision and consent-withdrawal duties</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge tier--trans">Transparency</span></td>
+          <td class="num">2</td>
+          <td>EU</td>
+          <td>Chatbot disclosure and deepfake / synthetic media labelling (Art. 50)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:1.5rem;"><a href="#rules-detail" class="mono" style="font-size:0.85rem;">See the full 27-rule ledger ↓</a></p>
+
+    <div class="rules-grid" id="rules-detail">
+      <div class="rule-cell"><div class="rule-id">PROH-ART5-1A</div><div class="rule-title">Subliminal Manipulation</div><div class="rule-meta"><span class="tier-badge tier--prohibited">Prohibited</span><span class="rule-art">Art. 5(1)(a)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">PROH-ART5-1B</div><div class="rule-title">Vulnerability Exploitation</div><div class="rule-meta"><span class="tier-badge tier--prohibited">Prohibited</span><span class="rule-art">Art. 5(1)(b)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">PROH-ART5-1C</div><div class="rule-title">Social Scoring</div><div class="rule-meta"><span class="tier-badge tier--prohibited">Prohibited</span><span class="rule-art">Art. 5(1)(c)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">PROH-ART5-1D</div><div class="rule-title">Predictive Policing (Individual Profiling)</div><div class="rule-meta"><span class="tier-badge tier--prohibited">Prohibited</span><span class="rule-art">Art. 5(1)(d)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">PROH-ART5-1E</div><div class="rule-title">Facial Recognition Data Scraping</div><div class="rule-meta"><span class="tier-badge tier--prohibited">Prohibited</span><span class="rule-art">Art. 5(1)(e)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">PROH-ART5-1F</div><div class="rule-title">Emotion Recognition (Workplace / Education)</div><div class="rule-meta"><span class="tier-badge tier--prohibited">Prohibited</span><span class="rule-art">Art. 5(1)(f)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">PROH-ART5-1G</div><div class="rule-title">Biometric Categorisation (Sensitive Attributes)</div><div class="rule-meta"><span class="tier-badge tier--prohibited">Prohibited</span><span class="rule-art">Art. 5(1)(g)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">PROH-ART5-1H</div><div class="rule-title">Real-Time Remote Biometric ID (Public, Law Enforcement)</div><div class="rule-meta"><span class="tier-badge tier--prohibited">Prohibited</span><span class="rule-art">Art. 5(1)(h)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S1A-RBI</div><div class="rule-title">Remote Biometric Identification (Non-Prohibited Uses)</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §1(a)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S1BC-BIOCAT-EMOTION</div><div class="rule-title">Biometric Categorisation &amp; Emotion Recognition</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §1(b)(c)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S2-INFRA</div><div class="rule-title">Critical Infrastructure Management &amp; Safety</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §2</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S3-EDU</div><div class="rule-title">Education: Access &amp; Student Assessment</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §3</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S4-EMPLOY</div><div class="rule-title">Employment, HR &amp; Recruitment Scoring</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §4</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S5A-BENEFITS</div><div class="rule-title">Social Benefits &amp; Public Services Eligibility</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §5</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S5B-CREDIT</div><div class="rule-title">Credit Scoring &amp; Financial Risk Evaluation</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §5</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S5B-INSURE</div><div class="rule-title">Insurance Risk Assessment &amp; Premium Pricing</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §5</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S6-LEF</div><div class="rule-title">Law Enforcement AI Systems</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §6</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S7-MIGRATION</div><div class="rule-title">Migration, Asylum &amp; Border Control</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §7</span></div></div>
+      <div class="rule-cell"><div class="rule-id">HIGH-A3-S8-JUSTICE</div><div class="rule-title">Justice &amp; Democratic Processes</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">Annex III §8</span></div></div>
+      <div class="rule-cell"><div class="rule-id">TRANS-ART50-1</div><div class="rule-title">Chatbot / Conversational AI Disclosure</div><div class="rule-meta"><span class="tier-badge tier--trans">Transparency</span><span class="rule-art">Art. 50(1)</span></div></div>
+      <div class="rule-cell"><div class="rule-id">TRANS-ART50-4</div><div class="rule-title">Deepfake, Synthetic Media &amp; Public-Interest Text</div><div class="rule-meta"><span class="tier-badge tier--trans">Transparency</span><span class="rule-art">Art. 50(2)·50(4)</span></div></div>
+    </div>
+
+    <div class="ndpa-divider">
+      <h3 style="margin-bottom:0.75rem;">Plus 2 rules for Nigeria — NDPA 2023, in force today</h3>
+      <p class="section-sub" style="margin-bottom:1.5rem;">Nigeria's Data Protection Act 2023 governs cross-border transfers and processing after a data subject's objection — real, binding law, already enforced.</p>
+      <div class="rules-grid" style="grid-template-columns:repeat(2,1fr);">
+        <div class="rule-cell"><div class="rule-id">HIGH-NG-NDPA-S41-CROSSBORDER</div><div class="rule-title">Cross-Border Transfer Without a Lawful Basis</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">NDPA 2023, ss.41–43</span></div></div>
+        <div class="rule-cell"><div class="rule-id">HIGH-NG-NDPA-S36-OBJECTION</div><div class="rule-title">Processing Continues After Data Subject Objection</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">NDPA 2023, s.36</span></div></div>
+      </div>
+    </div>
+
+    <div class="ndpa-divider">
+      <h3 style="margin-bottom:0.75rem;">Plus 1 rule for the UK — Data (Use and Access) Act 2025, in force since 5 Feb 2026</h3>
+      <p class="section-sub" style="margin-bottom:1.5rem;">The UK repealed UK GDPR Article 22 and replaced it with a new automated-decision-making regime (Articles 22A–22D) under its own Act.</p>
+      <div class="rules-grid" style="grid-template-columns:repeat(1,1fr);">
+        <div class="rule-cell"><div class="rule-id">HIGH-UK-DUAA-S80-AUTOMATED-DECISION</div><div class="rule-title">Solely Automated Significant Decision on Special Category Data Without Safeguards</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">UK GDPR Arts. 22A–22D</span></div></div>
+      </div>
+    </div>
+
+    <div class="ndpa-divider">
+      <h3 style="margin-bottom:0.75rem;">Plus 1 rule for Singapore — Personal Data Protection Act 2012, s.16</h3>
+      <p class="section-sub" style="margin-bottom:1.5rem;">Singapore's Personal Data Protection Act requires an organisation to cease processing once an individual withdraws consent, unless another lawful basis applies.</p>
+      <div class="rules-grid" style="grid-template-columns:repeat(1,1fr);">
+        <div class="rule-cell"><div class="rule-id">HIGH-SG-PDPA-S16-WITHDRAWAL</div><div class="rule-title">Processing Continues After a Data Subject's Consent Withdrawal</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">PDPA 2012, s.16</span></div></div>
+      </div>
+    </div>
+
+    <div class="ndpa-divider">
+      <h3 style="margin-bottom:0.75rem;">Plus 1 rule for Egypt — Personal Data Protection Law No. 151/2020, Art. 17</h3>
+      <p class="section-sub" style="margin-bottom:1.5rem;">Egypt's Personal Data Protection Law prohibits direct electronic marketing unless the sender provides a clear mechanism to refuse or withdraw consent. Its grace period ends around October/November 2026.</p>
+      <div class="rules-grid" style="grid-template-columns:repeat(1,1fr);">
+        <div class="rule-cell"><div class="rule-id">HIGH-EG-PDPL-ART17-MARKETING</div><div class="rule-title">Direct Electronic Marketing Continues Without Honoring Refusal or Withdrawal</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">PDPL 2020, Arts. 17–18</span></div></div>
+      </div>
+    </div>
+
+    <div class="ndpa-divider">
+      <h3 style="margin-bottom:0.75rem;">Plus 1 forward-looking rule for Colorado — SB26-189, <span style="color:var(--text-muted);">not enforceable until 1 Jan 2027</span></h3>
+      <p class="section-sub" style="margin-bottom:1.5rem;">Colorado's Automated Decision-Making Technology Act requires deployers to give notice before use, explain adverse decisions, and offer meaningful human review for consequential decisions in employment, housing, lending, insurance, healthcare, education, and government services. Wired now so it flags as a forward-looking risk, not a live violation — the underlying obligations do not take effect until 1 January 2027.</p>
+      <div class="rules-grid" style="grid-template-columns:repeat(1,1fr);">
+        <div class="rule-cell"><div class="rule-id">HIGH-CO-SB189-ADMT-CONSEQUENTIAL</div><div class="rule-title">Consequential ADMT Decision Without Notice or Meaningful Human Review</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">SB26-189 — effective 1 Jan 2027</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REGULATORY WATCH LOOP ───────────────────────────────────────────────── -->
+<section class="section" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="label"><span class="dot"></span>Regulatory Intelligence</div>
+    <h2 class="section-title">Live monitoring across 6 jurisdictions, updated weekly</h2>
+    <p class="section-sub">A scheduled Regulatory Watch Loop checks each jurisdiction's primary regulator directly — the European Commission, GOV.UK / DSIT, Ireland's Data Protection Commission, Nigeria's NDPC &amp; NITDA, Singapore's PDPC, and Egypt's Ministry of Communications and Information Technology — surfacing new developments for review before they become a gap in your compliance posture. <strong style="color:var(--gold);">This is regulatory intelligence: the early-warning layer that feeds rule development, separate from the rule engine itself.</strong> Enforced rule coverage today comes from five reviewed, activated rulesets — the EU AI Act, Nigeria's NDPA, UK GDPR under the Data (Use and Access) Act 2025, Singapore's PDPA, and Egypt's PDPL (26 rules, above); each new jurisdiction is added once its rule is built and reviewed. Ireland's coverage comes through the EU AI Act as an EU member state, with its own Data Protection Commission adding a dedicated monitoring layer on top. Colorado's rule is wired for forward-looking flagging ahead of its 1 January 2027 effective date (see above); Watch Loop coverage for its regulator is a planned future addition.</p>
+
+    <div class="rules-grid">
+      <div class="rule-cell rule-cell--source"><div class="rule-title">European Commission</div><div class="rule-meta"><span class="rule-art">EU · Digital Strategy feed</span></div></div>
+      <div class="rule-cell rule-cell--source"><div class="rule-title">GOV.UK — DSIT</div><div class="rule-meta"><span class="rule-art">UK · News &amp; communications</span></div></div>
+      <div class="rule-cell rule-cell--source"><div class="rule-title">Data Protection Commission</div><div class="rule-meta"><span class="rule-art">Ireland · Press releases</span></div></div>
+      <div class="rule-cell rule-cell--source"><div class="rule-title">NDPC &amp; NITDA</div><div class="rule-meta"><span class="rule-art">Nigeria · Press releases</span></div></div>
+      <div class="rule-cell rule-cell--source"><div class="rule-title">PDPC</div><div class="rule-meta"><span class="rule-art">Singapore · Media &amp; events feed</span></div></div>
+      <div class="rule-cell rule-cell--source"><div class="rule-title">MCIT</div><div class="rule-meta"><span class="rule-art">Egypt · Press releases</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REGULATORY CLOCK (docket) ───────────────────────────────────────────── -->
+<section class="section" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="label"><span class="dot"></span>Regulatory Clock</div>
+    <h2 class="section-title">The enforcement calendar is not negotiable — in any of the six</h2>
+    <p class="section-sub">Your procurement cycle, your legal review cycle, and your engineering integration cycle all need to complete before the relevant enforcement date, whichever jurisdiction it falls in. Aegis Guard is designed to compress the integration timeline to days, not quarters.</p>
+
+    <div class="docket">
+      <div class="docket-item docket-item--active">
+        <div class="docket-date">August 2024 — In Force<span class="docket-tag" style="color:var(--gold);">EU</span></div>
+        <div class="docket-title">EU AI Act Enters into Force</div>
+        <div class="docket-body">The regulation became binding law across all 27 EU member states. Organisations operating AI systems in-scope have been under regulatory scrutiny since this date.</div>
+      </div>
+      <div class="docket-item docket-item--active">
+        <div class="docket-date">February 2025 — Active<span class="docket-tag" style="color:var(--gold);">EU</span></div>
+        <div class="docket-title">Article 5 Prohibited Practices Enforceable</div>
+        <div class="docket-body">All eight prohibited AI practices under Article 5 are now fully enforceable. Fines up to €35M or 7% of worldwide annual turnover.</div>
+      </div>
+      <div class="docket-item docket-item--active">
+        <div class="docket-date">5 February 2026 — Active<span class="docket-tag" style="color:#8FB8D8;">UK</span></div>
+        <div class="docket-title">UK Automated Decision-Making Regime Replaces Article 22</div>
+        <div class="docket-body">The Data (Use and Access) Act 2025 repealed UK GDPR Article 22 and replaced it with Articles 22A–22D, materially widening the safeguards duty for solely automated significant decisions.</div>
+      </div>
+      <div class="docket-item">
+        <div class="docket-date">2 August 2026 — Active<span class="docket-tag" style="color:var(--gold);">EU</span></div>
+        <div class="docket-title">Transparency, AI Literacy &amp; GPAI Enforcement</div>
+        <div class="docket-body">Article 50 transparency duties (chatbot disclosure, deepfake labelling) apply, national authorities gain penalty powers, Article 4 AI literacy becomes enforceable, and GPAI model enforcement begins.</div>
+      </div>
+      <div class="docket-item">
+        <div class="docket-date">~October/November 2026 — Approaching<span class="docket-tag" style="color:#C9714A;">EG</span></div>
+        <div class="docket-title">Egypt PDPL Grace Period Ends</div>
+        <div class="docket-body">The Executive Regulations to Egypt's Personal Data Protection Law took effect 1 November 2025 with a one-year compliance grace period. Full enforcement, including Article 17's marketing-consent duty, lands around this date.</div>
+      </div>
+      <div class="docket-item">
+        <div class="docket-date">1 January 2027 — Approaching<span class="docket-tag" style="color:#9B8AC4;">CO</span></div>
+        <div class="docket-title">Colorado ADMT Act Becomes Enforceable</div>
+        <div class="docket-body">SB26-189's notice, adverse-decision-explanation, and human-review obligations for consequential automated decisions become live. Aegis Guard's rule is wired now for forward-looking flagging; enforcement itself starts on this date.</div>
+      </div>
+      <div class="docket-item">
+        <div class="docket-date">2 December 2027 — High-Risk Horizon<span class="docket-tag" style="color:var(--gold);">EU</span></div>
+        <div class="docket-title">Annex III High-Risk Obligations (Provisional)</div>
+        <div class="docket-body">Full high-risk obligations — Article 9 risk management, Article 12 logging, Article 13 transparency, Article 26 deployer duties — covering employment, credit, education, law enforcement, and biometrics.</div>
+      </div>
+      <div class="docket-item">
+        <div class="docket-date">Ongoing<span class="docket-tag" style="color:var(--text-muted);">ALL</span></div>
+        <div class="docket-title">ISO/IEC 42001 Certification Pressure</div>
+        <div class="docket-body">Procurement frameworks in financial services, public sector, and critical infrastructure are beginning to require ISO 42001 conformance as a supply-chain condition, independent of jurisdiction.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────────────────────────────────────── -->
+<section class="cta-section" id="cta">
+  <div class="cta-inner">
+    <!-- No eyebrow here, unlike every other section: this is the last
+         thing on the page, position already tells you what it is. The
+         gold-emphasized phrase in the heading mirrors the hero's <em>
+         device (see .hero__title em) instead of inventing a new one, so
+         the page's opening and closing statements visually rhyme. -->
+    <h2 class="cta-heading">Know exactly where your <br>AI fleet stands <em>before a regulator does</em>.</h2>
+    <p>An Aegis Guard Architecture Review is a structured 90-minute session with our compliance engineering team. We map your current MCP server topology against the jurisdictions you actually operate in, identify the highest-priority integration points, and deliver a written risk assessment and deployment plan your General Counsel can sign off on.</p>
+    <div class="cta-brief">
+      <div class="cta-brief__item"><span class="cta-brief__label">Who attends</span>Your DPO or General Counsel, your CISO or security lead, and the engineer who owns your MCP server.</div>
+      <div class="cta-brief__item"><span class="cta-brief__label">Format</span>90 minutes, video call, NDA-protected — no sales deck.</div>
+      <div class="cta-brief__item"><span class="cta-brief__label">You leave with</span>A written risk assessment mapped to your real tool inventory and a deployment plan.</div>
+    </div>
+    <div class="cta-actions">
+      <a href="https://adesanyaaiadvisory.com/intake" class="btn btn--primary btn--lg">Request an Architecture Review</a>
+      <a href="mailto:abdulwahab@adesanyaaiadvisory.com?subject=Aegis%20Guard%20Technical%20Brief%20Request" class="btn btn--outline btn--lg">Download Technical Brief</a>
+    </div>
+    <p class="cta-fine">Not ready to talk? <a href="https://aegis-guard-gateway.onrender.com" target="_blank" rel="noopener">Try the live demo first ↗</a></p>
+    <p class="cta-fine">Available for on-premise, VPC, and air-gapped deployments. NDA-protected review. &nbsp;·&nbsp; <a href="https://adesanyaaiadvisory.com/privacy-policy">Privacy Policy</a> &nbsp;·&nbsp; <a href="#audit">Security Overview</a></p>
+  </div>
+</section>
+
+<!-- ── TRUST STRIP ─────────────────────────────────────────────────────────── -->
+<div class="trust-strip">
+  <div class="trust-strip__inner">
+    <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>EU AI Act Regulation (EU) 2024/1689</div>
+    <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>ISO/IEC 42001:2023 Annex A</div>
+    <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.2-6.3-4.5-6.3 4.5 2.3-7.2-6-4.4h7.6z"/></svg>HMAC-SHA256 tamper-evident records</div>
+    <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Model Context Protocol (MCP) native</div>
+    <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>On-premise · VPC · Air-gapped deployments</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer__inner" style="flex-direction:column;align-items:flex-start;gap:1rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;width:100%;min-width:0;">
+      <div class="footer__brand">Aegis Guard Gateway · Enterprise AI Compliance Infrastructure<br><span style="font-size:0.8rem;color:var(--text-muted);">An Adesanya AI Advisory product →</span></div>
+      <div class="footer__links">
+        <a href="#cta">Documentation</a>
+        <a href="#cta">Architecture Brief</a>
+        <a href="#audit">Security</a>
+        <a href="mailto:abdulwahab@adesanyaaiadvisory.com">Contact</a>
+      </div>
+    </div>
+    <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.7;max-width:900px;">27 pre-mapped compliance rules across the EU AI Act, UK GDPR (DUAA 2025), Nigeria's NDPA, Singapore's PDPA, Egypt's PDPL, and Colorado's ADMT Act (forward-looking, effective 1 Jan 2027) — deterministic scoring, HMAC-SHA256 tamper-evident audit records, and ISO/IEC 42001 Annex A control mapping. Deploys on-premise, in your VPC, or fully air-gapped; no payload leaves your environment. Not legal advice — a compliance engineering tool your legal team configures and reviews.</p>
+  </div>
+</footer>
+
+<script>
+  // In-page anchor links (nav, hero CTAs, footer) update the URL hash but
+  // the browser's native scroll-to-fragment was not firing reliably on this
+  // page — confirmed with a scroll-event listener that never fired on click
+  // or on a fresh #hash page load. Handling the scroll ourselves makes every
+  // "#section" link deterministic instead of depending on that behaviour.
+  (function () {
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      var id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      var target = document.getElementById(id);
+      if (!target) return;
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        // Instant, not 'smooth': the hero's WebGL loop renders every frame
+        // for as long as the tab is open, and on modest hardware that main-
+        // thread contention can starve a CSS smooth-scroll animation before
+        // it ever moves — which reads as "the link doesn't do anything."
+        // An instant jump can't be starved the same way.
+        target.scrollIntoView({ behavior: 'instant', block: 'start' });
+        history.pushState(null, '', '#' + id);
+      });
+    });
+  })();
+</script>
+
+<script>
+  // Mobile nav toggle — the links list is display:none below 980px with no
+  // other way to reach it, so those tabs were simply unreachable. This wires
+  // up the hamburger button added next to nav__actions.
+  (function () {
+    var nav = document.getElementById('mainNav');
+    var toggle = document.getElementById('navToggle');
+    if (!nav || !toggle) return;
+
+    function setOpen(open) {
+      nav.classList.toggle('nav--open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
+    toggle.addEventListener('click', function () {
+      setOpen(!nav.classList.contains('nav--open'));
+    });
+    nav.querySelectorAll('.nav__links a').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+    document.addEventListener('click', function (e) {
+      if (nav.classList.contains('nav--open') && !nav.contains(e.target)) setOpen(false);
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 980) setOpen(false);
+    });
+  })();
+</script>
+
+<script>
+  // Compliance check console. Front-end only: deterministic sample data
+  // below, no network call anywhere in this block. Structured as one
+  // SCENARIOS lookup so a real API response could replace the object this
+  // reads from without touching the render/sequencing logic.
+  (function () {
+    var SCENARIOS = {
+      safe: {
+        toolName: 'search_public_guidance',
+        payload: { method: 'tools/call', params: { name: 'search_public_guidance', arguments: { query: 'EU AI Act Article 50 transparency duties' } } },
+        tierClass: 'tier--minimal', badgeText: 'Allow', decisionText: 'Downstream tool permitted',
+        stage1: [['request_id', 'req-1a4c-77e2'], ['tool_name', 'search_public_guidance']],
+        stage3: [['risk_tier', 'MINIMAL'], ['rule_matches', 'None']],
+        stage4: [['action', 'CALL_PERMITTED']],
+        stage5: [['hmac_sha256', 'b71e4f2a…3c88d015', 'gold']]
+      },
+      high: {
+        toolName: 'screen_candidates',
+        payload: { method: 'tools/call', params: { name: 'screen_candidates', arguments: { role: 'Senior Analyst', candidates: 42, auto_rank: true } } },
+        tierClass: 'tier--high', badgeText: 'Flagged', decisionText: 'Human review required',
+        stage1: [['request_id', 'req-2f68-90c1'], ['tool_name', 'screen_candidates']],
+        stage3: [['risk_tier', 'HIGH_RISK'], ['top_rule_id', 'HIGH-A3-S4-EMPLOY'], ['article_ref', 'Annex III §4'], ['confidence', '0.90']],
+        stage4: [['action', 'FLAGGED_FOR_REVIEW']],
+        stage5: [['hmac_sha256', '7d2a91f4…c05b3e8a', 'gold']]
+      },
+      prohibited: {
+        toolName: 'live_facial_recognition_cctv',
+        payload: { method: 'tools/call', params: { name: 'live_facial_recognition_cctv', arguments: { camera_feed: 'public_plaza_03', mode: 'real_time_match' } } },
+        tierClass: 'tier--prohibited', badgeText: 'Blocked', decisionText: 'Downstream tool not executed',
+        stage1: [['request_id', 'req-8f3a-91cd'], ['tool_name', 'live_facial_recognition_cctv']],
+        stage3: [['risk_tier', 'PROHIBITED'], ['top_rule_id', 'PROH-ART5-1H'], ['article_ref', 'Article 5(1)(h)'], ['confidence', '0.95']],
+        stage4: [['action', 'CALL_BLOCKED', 'flag']],
+        stage5: [['iso_42001_controls', 'A.6.1.2, A.9.2, A.10.1'], ['hmac_sha256', 'a3f8c9d1…9e1d3f5a', 'gold']]
+      }
+    };
+    var STAGE_TEXT = [
+      'Stage 1 of 5 — JSON-RPC intercepted',
+      'Stage 2 of 5 — Risk signals extracted',
+      'Stage 3 of 5 — Rules evaluated',
+      'Stage 4 of 5 — Decision issued',
+      'Stage 5 of 5 — Audit record created'
+    ];
+
+    // Live engine endpoint. Real, deployed, CORS-open by design, rate-
+    // limited server-side (20 req/min/IP) and never persists what's sent —
+    // see aegis_guard/demo/server.py in this repo. Only "Try your own"
+    // calls this; the three sample scenarios above stay fully local.
+    var LIVE_ENDPOINT = 'https://aegis-guard-gateway.onrender.com/api/evaluate';
+    var LIVE_SLOW_MS = 4000;   // after this long, admit the engine may be cold-starting
+    var LIVE_TIMEOUT_MS = 45000; // hard cap so a hung request can't wedge the UI forever
+
+    var CUSTOM_DEFAULT_TOOL = 'summarize_customer_call';
+    var CUSTOM_DEFAULT_PAYLOAD = JSON.stringify({
+      method: 'tools/call',
+      params: { name: 'summarize_customer_call', arguments: { transcript: 'Customer asked about the return policy for order #4471.' } }
+    }, null, 2);
+
+    var runBtn = document.getElementById('checkRunBtn');
+    if (!runBtn) return;
+    var resetBtn = document.getElementById('checkResetBtn');
+    var statusEl = document.getElementById('checkStatus');
+    var recordEl = document.getElementById('checkRecord');
+    var toolNameEl = document.getElementById('checkToolName');
+    var payloadEl = document.getElementById('checkPayload');
+    var toolNameInput = document.getElementById('checkToolNameInput');
+    var payloadInput = document.getElementById('checkPayloadInput');
+    var errorEl = document.getElementById('checkError');
+    var liveNoteEl = document.getElementById('checkLiveNote');
+    var badgeEl = document.getElementById('checkBadge');
+    var radios = document.querySelectorAll('input[name="scenario"]');
+    var ticks = document.querySelectorAll('.check-stepper__tick');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var running = false;
+    var timers = [];
+    var liveController = null;
+    var liveRequestId = 0;
+    var customInitialized = false;
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    function currentKey() {
+      var checked = document.querySelector('input[name="scenario"]:checked');
+      return checked ? checked.value : 'safe';
+    }
+    function isCustom() { return currentKey() === 'custom'; }
+
+    function renderPayload() {
+      var key = currentKey();
+      if (key === 'custom') {
+        toolNameEl.hidden = true; payloadEl.hidden = true;
+        toolNameInput.hidden = false; payloadInput.hidden = false;
+        liveNoteEl.hidden = false;
+        badgeEl.textContent = 'Live engine · real classification';
+        badgeEl.classList.add('check-badge--live');
+        if (!customInitialized) {
+          toolNameInput.value = CUSTOM_DEFAULT_TOOL;
+          payloadInput.value = CUSTOM_DEFAULT_PAYLOAD;
+          customInitialized = true;
+        }
+        return;
+      }
+      toolNameEl.hidden = false; payloadEl.hidden = false;
+      toolNameInput.hidden = true; payloadInput.hidden = true;
+      liveNoteEl.hidden = true;
+      badgeEl.textContent = 'Front-end demonstration · sample data';
+      badgeEl.classList.remove('check-badge--live');
+      var s = SCENARIOS[key];
+      toolNameEl.textContent = s.toolName;
+      payloadEl.textContent = JSON.stringify(s.payload, null, 2);
+    }
+    function clearTicks() {
+      ticks.forEach(function (t) { t.classList.remove('is-active', 'is-done'); });
+    }
+    function setTicksThrough(n, done) {
+      ticks.forEach(function (t) {
+        var i = parseInt(t.getAttribute('data-tick'), 10);
+        t.classList.toggle('is-done', i < n || (done && i <= n));
+        t.classList.toggle('is-active', !done && i === n);
+      });
+    }
+    function rowHtml(key, val, variant) {
+      var cls = variant === 'gold' ? ' record-val--gold' : variant === 'flag' ? ' record-val--flag' : '';
+      return '<div class="record-row check-record__row"><span class="record-key">' + escapeHtml(key) +
+        '</span><span class="record-val' + cls + '">' + escapeHtml(val) + '</span></div>';
+    }
+    function showEmptyState() {
+      recordEl.innerHTML = '<p class="check-record__empty">Run a scenario to see the decision and an audit-record preview.</p>';
+    }
+    function stopTimers() {
+      timers.forEach(clearTimeout);
+      timers = [];
+    }
+    function stopLive() {
+      if (liveController) { liveController.abort(); liveController = null; }
+    }
+    function setError(msg) {
+      if (msg) { errorEl.textContent = msg; errorEl.hidden = false; }
+      else { errorEl.textContent = ''; errorEl.hidden = true; }
+    }
+    function finishRun() {
+      runBtn.disabled = false;
+      running = false;
+    }
+
+    function runScenario() {
+      if (running) return;
+      if (isCustom()) { runLiveCheck(); return; }
+      var s = SCENARIOS[currentKey()];
+      running = true;
+      runBtn.disabled = true;
+      // resetBtn stays enabled throughout — deliberately not disabled, so
+      // it doubles as a cancel control for a slow live request instead of
+      // being unreachable exactly when someone would want to click it.
+      clearTicks();
+      recordEl.innerHTML = '';
+
+      var plan = [
+        { tick: 1, text: STAGE_TEXT[0], rows: s.stage1 },
+        { tick: 2, text: STAGE_TEXT[1], rows: [] },
+        { tick: 2, text: STAGE_TEXT[2], rows: s.stage3 },
+        { tick: 3, text: STAGE_TEXT[3], rows: s.stage4, decision: true },
+        { tick: 4, text: STAGE_TEXT[4], rows: s.stage5 }
+      ];
+      var stepDelay = reduceMotion ? 0 : 260;
+      plan.forEach(function (step, idx) {
+        timers.push(setTimeout(function () {
+          var isLast = idx === plan.length - 1;
+          setTicksThrough(step.tick, isLast);
+          if (step.decision) {
+            recordEl.insertAdjacentHTML('beforeend',
+              '<div class="check-record__decision"><span class="tier-badge ' + s.tierClass + '">' + escapeHtml(s.badgeText) +
+              '</span><span class="check-record__decision-text">' + escapeHtml(s.decisionText) + '</span></div>');
+          }
+          step.rows.forEach(function (r) { recordEl.insertAdjacentHTML('beforeend', rowHtml(r[0], r[1], r[2])); });
+          statusEl.textContent = isLast ? ('COMPLETE — ' + s.badgeText.toUpperCase()) : ('EVALUATING — ' + step.text);
+          if (isLast) finishRun();
+        }, idx * stepDelay));
+      });
+    }
+
+    // Real POST to LIVE_ENDPOINT. No fake progress here: a live network
+    // call already takes real time, so the stepper just marks "in flight"
+    // (tick 1) then jumps straight to "done" on a real response — adding a
+    // fabricated 5-stage reveal on top of an actual round-trip would
+    // misrepresent what's happening.
+    function runLiveCheck() {
+      var toolName = toolNameInput.value.trim();
+      var payloadText = payloadInput.value.trim();
+      setError(null);
+
+      if (!toolName) { setError('Enter a tool name.'); return; }
+      var payloadObj;
+      try {
+        payloadObj = payloadText ? JSON.parse(payloadText) : {};
+      } catch (e) {
+        setError("Payload isn't valid JSON — " + e.message);
+        return;
+      }
+
+      running = true;
+      runBtn.disabled = true;
+      clearTicks();
+      setTicksThrough(1, false);
+      recordEl.innerHTML = '';
+      statusEl.textContent = 'EVALUATING — sending to the live engine…';
+
+      // thisRequestId guards against a real race: AbortController.abort()
+      // only stops network activity in flight — if the response has
+      // already arrived at the browser by the time Reset is clicked, the
+      // success handler below would still fire and silently overwrite the
+      // just-reset UI with a stale result. Every handler checks it's still
+      // the current request before touching anything.
+      var thisRequestId = ++liveRequestId;
+
+      var slowTimer = setTimeout(function () {
+        if (thisRequestId !== liveRequestId) return;
+        statusEl.textContent = 'Waking up the live engine — first request can take up to 30 seconds…';
+      }, LIVE_SLOW_MS);
+      var hardTimer = setTimeout(function () { if (liveController) liveController.abort(); }, LIVE_TIMEOUT_MS);
+      liveController = new AbortController();
+
+      fetch(LIVE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tool_name: toolName, payload: payloadObj }),
+        signal: liveController.signal
+      }).then(function (res) {
+        clearTimeout(slowTimer); clearTimeout(hardTimer);
+        if (thisRequestId === liveRequestId) liveController = null;
+        if (!res.ok) {
+          if (res.status === 429) throw new Error('Rate limit reached — wait a minute and try again.');
+          throw new Error('The live engine returned an error (' + res.status + ').');
+        }
+        return res.json();
+      }).then(function (data) {
+        if (thisRequestId !== liveRequestId) return;
+        renderLiveResult(data, toolName);
+        setTicksThrough(4, true);
+        statusEl.textContent = 'COMPLETE — ' + (data.is_blocked ? 'BLOCKED' : (data.risk_tier || '').replace('_', ' '));
+        finishRun();
+      }).catch(function (err) {
+        clearTimeout(slowTimer); clearTimeout(hardTimer);
+        if (thisRequestId !== liveRequestId) return;
+        liveController = null;
+        clearTicks();
+        var msg = (err && err.name === 'AbortError') ? 'Timed out waiting for the live engine.' : (err && err.message);
+        recordEl.innerHTML = '<p class="check-record__empty">Couldn’t reach the live engine' +
+          (msg ? ' — ' + escapeHtml(msg) : '') + '. Try again, or use a sample scenario above.</p>';
+        statusEl.textContent = 'READY';
+        finishRun();
+      });
+    }
+
+    function renderLiveResult(data, toolName) {
+      var tier = data.risk_tier || 'MINIMAL';
+      var cls = tier === 'PROHIBITED' ? 'tier--prohibited' : tier === 'HIGH_RISK' ? 'tier--high' :
+        tier === 'TRANSPARENCY' ? 'tier--trans' : 'tier--minimal';
+      var badgeText = data.is_blocked ? 'Blocked' : (tier === 'MINIMAL' ? 'Allow' : 'Flagged');
+      var html = '<div class="check-record__decision"><span class="tier-badge ' + cls + '">' + escapeHtml(badgeText) +
+        '</span><span class="check-record__decision-text">' + escapeHtml(tier.replace('_', ' ')) + '</span></div>';
+      if (data.risk_justification) {
+        html += '<p class="check-record__justification">' + escapeHtml(data.risk_justification) + '</p>';
+      }
+      html += rowHtml('request_id', data.request_id || '—');
+      html += rowHtml('tool_name', toolName);
+      (data.violations || []).forEach(function (v) {
+        html += rowHtml(v.rule_id, Math.round((v.confidence || 0) * 100) + '% · ' + v.article_ref);
+      });
+      if (data.iso_42001_controls && data.iso_42001_controls.length) {
+        html += rowHtml('iso_42001_controls', data.iso_42001_controls.join(', '), 'gold');
+      }
+      if (data.pii_severity && data.pii_severity !== 'NONE') {
+        html += rowHtml('pii_severity', data.pii_severity, 'flag');
+      }
+      recordEl.innerHTML = html;
+    }
+
+    function resetDemo() {
+      liveRequestId++; // invalidate any in-flight request's handlers, even if its response already arrived
+      stopTimers();
+      stopLive();
+      running = false;
+      runBtn.disabled = false;
+      resetBtn.disabled = false;
+      clearTicks();
+      setError(null);
+      statusEl.textContent = 'READY';
+      showEmptyState();
+    }
+
+    radios.forEach(function (r) {
+      r.addEventListener('change', function () { renderPayload(); resetDemo(); });
+    });
+    runBtn.addEventListener('click', runScenario);
+    resetBtn.addEventListener('click', resetDemo);
+
+    // Progressive enhancement: the HTML ships a fully populated "safe"
+    // result by default so a no-JS visitor sees a complete, real example.
+    // Once JS runs, switch to the interactive run-to-see state.
+    renderPayload();
+    resetDemo();
+  })();
+</script>
+
+<!-- Code rain — ported as-is from adesanyaaiadvisory.com/index.html (the
+     brand's own reference implementation, reused there across multiple
+     sections: hero, briefs, contact). Plain Canvas2D, no WebGL/Three.js at
+     all, which is also why it doesn't have the cross-browser rendering
+     problems the old WebGL hero did — fillText/fillRect behave the same
+     everywhere. Legal/code character set fits the compliance subject
+     matter directly (EU AI Act article refs, GDPR, code symbols). -->
+<script>
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    document.querySelectorAll('canvas.code-rain').forEach(function(c){ c.style.display='none'; });
+    return;
+  }
+  var CHARS = 'Art.5Art.6Art.9GDPRAI§©℗{}[]();=>!=<>∑∆αβγδεζθλμπρστφψω01&|~+-/*%^?:,\\"\'`#@!_|\\\\<>/0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+  var charArr = CHARS.split('');
+  var COL_W = 18;
+  var DPR = Math.min(window.devicePixelRatio||1,2);
+
+  function initRain(rain){
+    var rc = rain.getContext('2d');
+    var cols, drops, speeds, opacs;
+
+    function resize(){
+      var w = rain.parentElement.offsetWidth;
+      var h = rain.parentElement.offsetHeight;
+      rain.width = w * DPR;
+      rain.height = h * DPR;
+      rain.style.width = w + 'px';
+      rain.style.height = h + 'px';
+      rc.setTransform(DPR,0,0,DPR,0,0);
+      cols = Math.floor(w / COL_W);
+      drops = [];
+      speeds = [];
+      opacs = [];
+      for(var i=0;i<cols;i++){
+        drops[i] = Math.random() * -(h / 16);
+        speeds[i] = 0.3 + Math.random() * 0.5;
+        opacs[i]  = 0.25 + Math.random() * 0.75;
+      }
+    }
+
+    var lastT = 0;
+    function draw(ts){
+      var dt = ts - lastT;
+      if(dt < 33){ requestAnimationFrame(draw); return; }
+      lastT = ts;
+
+      var h = rain.parentElement.offsetHeight;
+      var w = rain.parentElement.offsetWidth;
+
+      rc.fillStyle = 'rgba(10,16,32,0.18)';
+      rc.fillRect(0,0,w,h);
+
+      rc.font = '13px ui-monospace,"SF Mono",Menlo,monospace';
+
+      for(var i=0;i<cols;i++){
+        var ch = charArr[Math.floor(Math.random()*charArr.length)];
+        var x = i * COL_W + 2;
+        var y = drops[i] * 16;
+
+        rc.fillStyle = 'rgba(247,220,168,' + opacs[i] + ')';
+        rc.fillText(ch, x, y);
+
+        if(Math.random() < 0.06){
+          rc.fillStyle = 'rgba(233,184,114,0.9)';
+          rc.fillText(charArr[Math.floor(Math.random()*charArr.length)], x, y - 16);
+        }
+
+        drops[i] += speeds[i];
+
+        if(drops[i] * 16 > h + 40 && Math.random() > 0.96){
+          drops[i] = Math.random() * -20;
+          speeds[i] = 0.3 + Math.random() * 0.5;
+          opacs[i]  = 0.25 + Math.random() * 0.75;
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    var hostSect = rain.closest('section') || rain.parentElement;
+    var io = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){
+        requestAnimationFrame(draw);
+      }
+    },{threshold:0.1});
+    io.observe(hostSect);
+
+    resize();
+    window.addEventListener('resize', resize, {passive:true});
+  }
+
+  document.querySelectorAll('canvas.code-rain').forEach(initRain);
+})();
+</script>
+
+<!-- The scroll-triggered fade-in for rule/gap/score cards was removed —
+     it depended on an IntersectionObserver firing at the right moment, and
+     had already needed one "safety net" patch for a prior case (anchor
+     jumps) where cards got stuck permanently invisible. It broke again
+     under different conditions. Cards are now always visible; not worth
+     the recurring risk for a minor fade-in flourish. -->
+
+
+</body>
+</html>

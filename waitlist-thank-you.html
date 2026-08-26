@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're on the list — Aegis Guard Gateway</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--midnight:#080C14;--navy:#111E35;--border:#243352;--border-lit:#2E4470;--azure:#2563EB;--azure-glow:#3B82F6;--azure-pale:#60A5FA;--green:#10B981;--green-pale:#34D399;--text-primary:#F1F5FF;--text-secondary:#94A3C0;--text-muted:#5A6E94;}
+    body{background:var(--midnight);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(37,99,235,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.03) 1px,transparent 1px);background-size:48px 48px;}
+    .card{background:var(--navy);border:1px solid var(--border-lit);border-radius:16px;padding:56px 48px;max-width:520px;width:100%;position:relative;z-index:1;}
+    .icon{width:64px;height:64px;background:rgba(16,185,129,.15);border:1px solid rgba(52,211,153,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:28px;color:var(--green-pale);}
+    h1{font-size:1.75rem;font-weight:800;letter-spacing:-.03em;margin-bottom:12px;}
+    p{font-size:.975rem;color:var(--text-secondary);line-height:1.6;margin-bottom:8px;}
+    .next-steps{background:rgba(37,99,235,.08);border:1px solid var(--border-lit);border-radius:10px;padding:20px 24px;margin:24px 0;text-align:left;}
+    .next-steps h3{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--azure-pale);margin-bottom:12px;}
+    .next-steps ol{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;}
+    .next-steps li{font-size:.875rem;color:var(--text-secondary);display:flex;gap:10px;}
+    .next-steps li span:first-child{color:var(--azure-pale);font-weight:700;flex-shrink:0;}
+    .btn{display:inline-block;background:var(--azure);color:#fff;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:700;font-size:.9rem;transition:background .2s;}
+    .btn:hover{background:var(--azure-glow);}
+    .back{display:block;margin-top:16px;font-size:.875rem;color:var(--text-muted);text-decoration:none;}
+    .back:hover{color:var(--text-primary);}
+    .logo{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-top:40px;position:relative;z-index:1;}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">✓</div>
+    <h1>You're on the list.</h1>
+    <p>Thanks for your interest in Aegis Guard Gateway. We'll be in touch when your cohort opens — early access pricing is locked.</p>
+    <div class="next-steps">
+      <h3>What happens next</h3>
+      <ol>
+        <li><span>01</span><span>We review your submission and confirm your tier of interest.</span></li>
+        <li><span>02</span><span>When your cohort opens, you'll receive an onboarding invite with setup instructions.</span></li>
+        <li><span>03</span><span>Enterprise enquiries — we'll reach out directly to scope a proof-of-concept.</span></li>
+      </ol>
+    </div>
+    <a class="btn" href="https://adesanyaaiadvisory.com/work-with-me.html">Explore advisory services →</a>
+    <a class="back" href="/">Return to Aegis Guard</a>
+  </div>
+  <div class="logo">AEGIS GUARD GATEWAY</div>
+</body>
+</html>
