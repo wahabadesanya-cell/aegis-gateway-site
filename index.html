@@ -695,6 +695,30 @@
 
     /* Focus visibility */
     a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    /* ── Mechanism walkthrough ───────────────────────────────────────────── */
+    .walkthrough {
+      background: var(--code-bg); border: 1px solid var(--border-lit); border-radius: 6px;
+      overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,161,74,0.06);
+      margin-top: 2.5rem;
+    }
+    .walkthrough__bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 0.7rem 1.1rem; border-bottom: 1px solid var(--border);
+      font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-muted);
+    }
+    .walkthrough__bar b { color: var(--gold); font-weight: 500; }
+    .walkthrough video { display: block; width: 100%; height: auto; background: var(--ink-deep); }
+    .walkthrough video:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+    .walkthrough__fallback { padding: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .walkthrough__fallback a { color: var(--gold); }
+    @media (max-width: 720px) {
+      .walkthrough__bar {
+        font-size: 0.68rem; padding: 0.6rem 0.85rem;
+        flex-direction: column; align-items: flex-start; gap: 0.2rem;
+        letter-spacing: 0.06em;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1155,6 +1179,26 @@
   </div>
 </section>
 
+<!-- ── MECHANISM WALKTHROUGH ───────────────────────────────────────────────── -->
+<section class="section" id="walkthrough" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="label"><span class="dot"></span>Mechanism Walkthrough</div>
+    <h2 class="section-title">Watch a tool call get stopped</h2>
+    <p class="section-sub">Seven minutes, no sales narration: a live MCP tool call enters the gateway, is evaluated against the rule set, and is blocked before it executes — followed by the signed audit record it leaves behind. Watch it before you speak to anyone.</p>
+
+    <figure class="walkthrough">
+      <figcaption class="walkthrough__bar"><b>Mechanism walkthrough</b><span>7 min 35 s · MP4</span></figcaption>
+      <video controls preload="metadata"
+             poster="/aegis-guard-video-poster.png"
+             aria-label="Aegis Guard Gateway mechanism walkthrough: a tool call is intercepted, evaluated, and blocked, then written to a signed audit record">
+        <source src="/aegis-guard-mechanism-walkthrough.mp4" type="video/mp4">
+        <p class="walkthrough__fallback">Your browser does not support embedded video. <a href="/aegis-guard-mechanism-walkthrough.mp4">Download the walkthrough (MP4)</a>.</p>
+      </video>
+    </figure>
+
+    <div class="invariant-note">The gateway resolves a specific legal collision: the EU AI Act's Article 26(6) deployer log-retention duty (deferred to 2 December 2027 under the Digital Omnibus, Regulation (EU) 2026/1744, in force 27 July 2026) requires a tamper-evident record kept for at least six months, while GDPR Articles 5 and 17 require personal data to stay minimised and erasable. Aegis Guard resolves it before the log is written — every entry is anonymised at the point of capture, signed with HMAC-SHA256, and stored inside the client's own network boundary.</div>
+  </div>
+</section>
 <!-- ── RULE LEDGER ─────────────────────────────────────────────────────────── -->
 <section class="section" id="rules" style="border-top:1px solid var(--border);">
   <div class="container">
