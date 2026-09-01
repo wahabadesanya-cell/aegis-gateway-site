@@ -968,7 +968,7 @@
           <li><code>@compliance_gate</code> wraps any <code>@mcp.tool()</code> function directly, in place.</li>
           <li>Fully deterministic scoring — every classification is reproducible from the raw payload.</li>
           <li>No new infrastructure to run: it executes in-process on every tool call.</li>
-          <li>Typed, tested Python — 900+ passing tests across the full suite.</li>
+          <li>Typed, tested Python — 1,150+ passing tests across the full suite.</li>
         </ul>
       </div>
     </div>
@@ -1041,11 +1041,10 @@
           </div>
           <p class="check-error" id="checkError" role="alert" hidden></p>
 
-          <!-- Real POST to the actual production engine (see
-               aegis_guard/demo/server.py — CORS is deliberately open,
-               rate-limited server-side, never persists input). Only this
-               "Try your own" mode calls it; the three sample scenarios
-               above stay fully local, no network request. -->
+          <!-- Real POST to the production engine: rate-limited server-side and
+               never persists input. Only this "Try your own" mode calls
+               it; the three sample scenarios above stay fully local, no
+               network request. -->
           <p class="check-live-note" id="checkLiveNote" hidden>Runs the real Aegis Guard engine live. Nothing you submit is stored.</p>
 
           <div class="check-actions">
@@ -1522,10 +1521,12 @@
       'Stage 5 of 5 — Audit record created'
     ];
 
-    // Live engine endpoint. Real, deployed, CORS-open by design, rate-
-    // limited server-side (20 req/min/IP) and never persists what's sent —
-    // see aegis_guard/demo/server.py in this repo. Only "Try your own"
-    // calls this; the three sample scenarios above stay fully local.
+    // Live engine endpoint. Real, deployed, rate-limited server-side and
+    // never persists what's sent. Only "Try your own" calls this; the
+    // three sample scenarios above stay fully local.
+    // Deliberately no limits, thresholds or server paths here: this file
+    // is served to the public web, where a precise rate limit is just a
+    // budget for staying under it.
     var LIVE_ENDPOINT = 'https://aegis-guard-gateway.onrender.com/api/evaluate';
     var LIVE_SLOW_MS = 4000;   // after this long, admit the engine may be cold-starting
     var LIVE_TIMEOUT_MS = 45000; // hard cap so a hung request can't wedge the UI forever
