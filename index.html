@@ -620,7 +620,7 @@
     .rule-art { color: var(--text-muted); }
     /* FIX: the regulatory-intelligence source list reused .rule-cell with
        only 2 of its 4 fields filled (no rule-id, no tier-badge), so next to
-       the dense 29-rule table using the same component it read as a bare
+       the dense 31-rule table using the same component it read as a bare
        name-and-caption grid — a directory/logo-wall pattern that doesn't
        say anything about what these actually are. They're live feeds a
        scheduled Watch Loop polls, so a small monitored-status dot (the same
@@ -774,7 +774,7 @@
   <div class="hero__inner">
     <div class="hero__eyebrow">Multi-Jurisdiction AI Compliance &nbsp;·&nbsp; ISO/IEC 42001 &nbsp;·&nbsp; MCP Native</div>
     <h1 class="hero__title">The compliance guardrail your <em>AI agent fleet</em> cannot operate without</h1>
-    <p class="hero__sub">One MCP interceptor screening every tool call against 29 pre-mapped rules across six jurisdictions — deterministically, before execution, with an audit trail your DPO can hand a regulator.</p>
+    <p class="hero__sub">One MCP interceptor screening every tool call against 31 pre-mapped rules across seven jurisdictions — deterministically, before execution, with an audit trail your DPO can hand a regulator.</p>
     <div class="hero__actions">
       <a href="#cta" class="btn btn--primary btn--lg">Request an Architecture Review</a>
       <a href="#architecture" class="btn btn--outline btn--lg">See How It Works</a>
@@ -786,7 +786,7 @@
       <a href="#persona-eng" class="btn btn--ghost">For Engineering</a>
     </div>
     <div class="hero__proof">
-      <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>29 rules pre-mapped across EU, Nigeria, UK, Singapore, Egypt &amp; Colorado</div>
+      <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>31 rules pre-mapped across EU, Nigeria, UK, Singapore, Egypt, Colorado &amp; India</div>
       <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Zero-config ISO 42001 Annex A control tagging</div>
       <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Single decorator. No agent rewrite required.</div>
       <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>HMAC-SHA256 audit records, SIEM-ready</div>
@@ -826,7 +826,7 @@
 <!-- ── STAT STRIP ──────────────────────────────────────────────────────────── -->
 <div class="stat-strip">
   <div class="stat-strip__grid">
-    <div class="stat"><div class="stat__num">29</div><div class="stat__label">Rules Wired — 23 EU + 2 Nigeria NDPA + 1 UK + 1 Singapore + 1 Egypt + 1 Colorado</div></div>
+    <div class="stat"><div class="stat__num">31</div><div class="stat__label">Rules Wired — 23 EU + 2 Nigeria NDPA + 1 UK + 1 Singapore + 1 Egypt + 1 Colorado + 2 India DPDP</div></div>
     <div class="stat"><div class="stat__num">4</div><div class="stat__label">Scoring Dimensions Per Evaluation</div></div>
     <div class="stat"><div class="stat__num">ISO 42001</div><div class="stat__label">Annex A Controls Auto-Tagged</div></div>
     <div class="stat"><div class="stat__num">18</div><div class="stat__label">Annex A Controls Mapped In The Registry</div></div>
@@ -837,8 +837,8 @@
 <section class="section" id="jurisdictions" style="border-top:1px solid var(--border);">
   <div class="container">
     <div class="label"><span class="dot"></span>Jurisdictions Covered</div>
-    <h2 class="section-title">Six jurisdictions, one engine, zero configuration</h2>
-    <p class="section-sub">Aegis Guard doesn't just cover the EU AI Act. Every jurisdiction below is built on real, binding law — verified against primary-source legal text, not policy drafts or non-binding frameworks — and the rule set keeps growing as new jurisdictions are researched and activated. Five rulesets are already enforceable today. Three individual rules are wired ahead of the date their law applies and are flagged as forward-looking risks rather than live violations until then: Colorado's, ahead of 1 January 2027, and the two EU AI Act rules for Article 5(1)(ba) and (bb), which Article 113 applies from 2 December 2026.</p>
+    <h2 class="section-title">Seven jurisdictions, one engine, zero configuration</h2>
+    <p class="section-sub">Aegis Guard doesn't just cover the EU AI Act. Every jurisdiction below is built on real, binding law — verified against primary-source legal text, not policy drafts or non-binding frameworks — and the rule set keeps growing as new jurisdictions are researched and activated. Five rulesets are already enforceable today. Five individual rules are wired ahead of the date their law applies and are flagged as forward-looking risks rather than live violations until then: the two EU AI Act rules for Article 5(1)(ba) and (bb), which Article 113 applies from 2 December 2026; Colorado's, ahead of 1 January 2027; and India's two, ahead of 13 May 2027.</p>
 
     <div class="juris-grid">
       <div class="juris-card juris-card--active">
@@ -876,6 +876,12 @@
         <h4>SB26-189 ADMT Act</h4>
         <div class="juris-card__law">Automated Decision-Making Technology Act — not in force until 1 Jan 2027</div>
         <div class="juris-card__stat"><span>1 rule</span><span style="color:var(--text-muted);">Upcoming</span></div>
+      </div>
+      <div class="juris-card juris-card--upcoming">
+        <div class="juris-card__flag">India</div>
+        <h4>DPDP Act &amp; Rules</h4>
+        <div class="juris-card__law">Digital Personal Data Protection Act 2023 and Rules 2025 — ss.3–10 not in force until 13 May 2027</div>
+        <div class="juris-card__stat"><span>2 rules</span><span style="color:var(--text-muted);">Upcoming</span></div>
       </div>
     </div>
   </div>
@@ -948,7 +954,7 @@
           <li>HMAC-SHA256 sealed records, tamper-evident by construction, not by policy.</li>
           <li>Every record cites its governing Article or statute section directly.</li>
           <li>ISO/IEC 42001 Annex A controls attached automatically, no manual mapping.</li>
-          <li>Coverage across six jurisdictions in one register, not six spreadsheets.</li>
+          <li>Coverage across seven jurisdictions in one register, not seven spreadsheets.</li>
         </ul>
       </div>
       <div class="persona-card" id="persona-ciso">
@@ -970,7 +976,7 @@
           <li><code>@compliance_gate</code> wraps any <code>@mcp.tool()</code> function directly, in place.</li>
           <li>Fully deterministic scoring — every classification is reproducible from the raw payload.</li>
           <li>No new infrastructure to run: it executes in-process on every tool call.</li>
-          <li>Typed, tested Python — 1,800+ passing tests across the full suite.</li>
+          <li>Typed, tested Python — 2,000+ passing tests across the full suite.</li>
         </ul>
       </div>
     </div>
@@ -1216,7 +1222,7 @@
 <section class="section" id="rules" style="border-top:1px solid var(--border);">
   <div class="container">
     <div class="label"><span class="dot"></span>Pre-Mapped Rule Coverage</div>
-    <h2 class="section-title">29 rules across six jurisdictions. Zero configuration.</h2>
+    <h2 class="section-title">31 rules across seven jurisdictions. Zero configuration.</h2>
     <p class="section-sub">Every rule shipped with Aegis Guard is pre-mapped to its governing Article or statute, risk tier, and ISO 42001 Annex A controls. Your compliance team does not write detection logic. They configure thresholds and review evidence.</p>
 
     <table class="coverage-table">
@@ -1244,7 +1250,7 @@
         </tr>
       </tbody>
     </table>
-    <p style="margin-top:1.5rem;"><a href="#rules-detail" class="mono" style="font-size:0.85rem;">See the full 29-rule ledger ↓</a></p>
+    <p style="margin-top:1.5rem;"><a href="#rules-detail" class="mono" style="font-size:0.85rem;">See the full 31-rule ledger ↓</a></p>
 
     <div class="rules-grid" id="rules-detail">
       <div class="rule-cell"><div class="rule-id">PROH-ART5-1A</div><div class="rule-title">Subliminal Manipulation</div><div class="rule-meta"><span class="tier-badge tier--prohibited">Prohibited</span><span class="rule-art">Art. 5(1)(a)</span></div></div>
@@ -1310,6 +1316,8 @@
       <p class="section-sub" style="margin-bottom:1.5rem;">Colorado's Automated Decision-Making Technology Act requires deployers to give notice before use, explain adverse decisions, and offer meaningful human review for consequential decisions in employment, housing, lending, insurance, healthcare, education, and government services. Wired now so it flags as a forward-looking risk, not a live violation — the underlying obligations do not take effect until 1 January 2027.</p>
       <div class="rules-grid" style="grid-template-columns:repeat(1,1fr);">
         <div class="rule-cell"><div class="rule-id">HIGH-CO-SB189-ADMT-CONSEQUENTIAL</div><div class="rule-title">Consequential ADMT Decision Without Notice or Meaningful Human Review</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">SB26-189 — effective 1 Jan 2027</span></div></div>
+      <div class="rule-cell"><div class="rule-id">IND-DPDP-CONSENT-01</div><div class="rule-title">Personal Data of an Indian Data Principal Processed Without Consent or a s.7 Legitimate Use <span style="color:var(--text-muted);">— applies from 13 May 2027</span></div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">DPDPA 2023, s.6 with Rules 2025, r.3</span></div></div>
+      <div class="rule-cell"><div class="rule-id">IND-DPDP-CHILDREN-02</div><div class="rule-title">Tracking or Targeted Advertising Directed at Children, or a Child's Data Without Verifiable Guardian Consent <span style="color:var(--text-muted);">— applies from 13 May 2027</span></div><div class="rule-meta"><span class="tier-badge tier--prohibited">Prohibited</span><span class="rule-art">DPDPA 2023, s.9 with Rules 2025, rr.10–12</span></div></div>
       </div>
     </div>
   </div>
