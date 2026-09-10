@@ -6,12 +6,12 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; form-action 'self' https://formsubmit.co; frame-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Aegis Guard Gateway — EU AI Act Compliance for Enterprise AI</title>
-  <meta name="description" content="Aegis Guard Gateway intercepts every AI tool call at the Model Context Protocol layer and classifies it against 31 pre-mapped compliance rules — EU AI Act, Nigeria's NDPA, UK GDPR, Singapore's PDPA, Egypt's PDPL, Colorado's ADMT Act, and India's DPDP Act — in real time, before execution, with a tamper-evident HMAC-SHA256 audit trail and control tagging from the gateway's own ISO 42001 control registry." />
+  <meta name="description" content="Aegis Guard Gateway intercepts every AI tool call at the Model Context Protocol layer and classifies it against 31 pre-mapped compliance rules — EU AI Act, Nigeria's NDPA, UK GDPR, Singapore's PDPA, Egypt's PDPL, Colorado's ADMT Act, and India's DPDP Act — in real time, before execution, with a tamper-evident HMAC-SHA256 audit trail and control tagging from the Aegis Guard control registry." />
   <link rel="canonical" href="https://gateway.adesanyaaiadvisory.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Aegis Guard Gateway" />
   <meta property="og:title" content="Aegis Guard Gateway — EU AI Act Compliance for Enterprise AI" />
-  <meta property="og:description" content="Real-time MCP compliance interception: 31 pre-mapped rules across the EU AI Act, Nigeria's NDPA, UK GDPR, Singapore's PDPA, Egypt's PDPL, Colorado's ADMT Act, and India's DPDP Act, deterministic risk scoring, tamper-evident audit trail, ISO 42001 control-registry auto-tagging." />
+  <meta property="og:description" content="Real-time MCP compliance interception: 31 pre-mapped rules across the EU AI Act, Nigeria's NDPA, UK GDPR, Singapore's PDPA, Egypt's PDPL, Colorado's ADMT Act, and India's DPDP Act, deterministic risk scoring, tamper-evident audit trail, Aegis Guard control-registry auto-tagging." />
   <meta property="og:url" content="https://gateway.adesanyaaiadvisory.com/" />
   <meta property="og:image" content="https://adesanyaaiadvisory.com/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -224,6 +224,54 @@
       .nav__inner { padding: 0 1rem; }
       .nav.nav--open .nav__links { padding-left: 1rem; padding-right: 1rem; }
     }
+    /* ── Touch tuning (added 10 Sep 2026) ──────────────────────────────────
+       MEASURED on a 375px viewport, not eyeballed. The page was already
+       responsive -- no horizontal document overflow, media queries down to
+       400px -- but it had never been tuned for a finger:
+
+         footer links      98x22, 53x22, 51x22   (adjacent, and 22px tall)
+         nav toggle        40x40
+         inline "ledger" link  237x16
+         67 text elements  under 13px, the hero eyebrow at 11.5px
+
+       Apple and Google both put the minimum tap target at 44px. Nothing below
+       is a redesign: it raises hit areas to 44px using padding so the visual
+       weight barely moves, and lifts the smallest type off the floor. */
+    @media (max-width: 640px) {
+      /* Hit areas. min-height + inline-flex centring rather than bigger text,
+         so the layout reads the same and only the touchable box grows. */
+      .footer__links a,
+      .cta-fine a,
+      a.mono {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding-block: 2px;
+      }
+      /* Adjacent footer links were 22px tall and butted together: the wrong
+         one was as easy to hit as the right one. */
+      .footer__links { row-gap: .25rem; column-gap: 1.25rem; }
+
+      .nav__toggle { width: 44px; height: 44px; }
+
+      /* Legibility. 11.5px eyebrow type is a desktop refinement that does not
+         survive a phone; 12.8px on a button label is worse, because it is the
+         thing you are asking someone to tap. */
+      .hero__eyebrow,
+      .hero__personas-label { font-size: .78rem; letter-spacing: .1em; }
+      .nav__actions .btn { font-size: .875rem; }
+      .btn { min-height: 44px; }
+
+      /* Momentum scrolling on the blocks that must go sideways. NOT a "swipe"
+         affordance: that was drafted and cut, because it was the one rule here
+         I could not measure -- an ::after inside a scroll container, on every
+         pre on the page including short ones. Untested decoration does not
+         ship to a live site. */
+      pre,
+      .chain-wrap,
+      .table-wrap { -webkit-overflow-scrolling: touch; }
+    }
+
     @media (max-width: 400px) {
       .nav__actions .btn--primary span.full { display: none; }
       .nav__actions .btn--primary span.short { display: inline !important; }
@@ -772,7 +820,7 @@
 <section class="hero">
   <canvas id="hero-canvas" class="code-rain" aria-hidden="true"></canvas>
   <div class="hero__inner">
-    <div class="hero__eyebrow">Multi-Jurisdiction AI Compliance &nbsp;·&nbsp; ISO/IEC 42001 &nbsp;·&nbsp; MCP Native</div>
+    <div class="hero__eyebrow">Multi-Jurisdiction AI Compliance &nbsp;·&nbsp; Deterministic &nbsp;·&nbsp; MCP Native</div>
     <h1 class="hero__title">The compliance guardrail your <em>AI agent fleet</em> cannot operate without</h1>
     <p class="hero__sub">One MCP interceptor screening every tool call against 31 pre-mapped rules across seven jurisdictions — deterministically, before execution, with an audit trail your DPO can hand a regulator.</p>
     <div class="hero__actions">
@@ -787,7 +835,7 @@
     </div>
     <div class="hero__proof">
       <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>31 rules pre-mapped across EU, Nigeria, UK, Singapore, Egypt, Colorado &amp; India</div>
-      <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Zero-config tagging from the gateway's ISO 42001 control registry</div>
+      <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Zero-config tagging from the Aegis Guard control registry</div>
       <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Single decorator. No agent rewrite required.</div>
       <div class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>HMAC-SHA256 audit records, SIEM-ready</div>
     </div>
@@ -817,7 +865,7 @@
 <span class="cmt"># Every call now produces a signed AuditRecord:
 # {
 #   "risk_tier": "HIGH_RISK",  "article": "Article 6(2) + Annex III §4",
-#   "iso_controls": ["A.8.4", "A.9.4", "A.10.1"],  "is_blocked": true,
+#   "iso_controls": ["AG-DATAPREP-01", "AG-NOTICE-01", "AG-LOG-01"],  "is_blocked": true,
 #   "hmac_sha256": "a3f8…c91d",  "confidence": 0.95
 # }</span></pre>
   </div>
@@ -922,8 +970,8 @@
       <div class="gap-card">
         <div class="gap-card__num">04</div>
         <h3>ISO 42001 Requires a Documented AI Management System</h3>
-        <p>Enterprise certification programmes increasingly require ISO/IEC 42001 conformance, and conformance turns on being able to show which controls each AI operation engages. Manual mapping exercises become instantly stale when your agent fleet evolves weekly. Aegis Guard attaches control ids to every finding automatically, from its own ISO 42001 control registry.</p>
-        <p style="font-size:0.82rem;color:var(--text-muted);"><strong>What this is, precisely.</strong> The registry is Aegis Guard's own control set, structured on ISO/IEC 42001 lines. It is not a reproduction of Annex A and is not yet reconciled to it, so the ids are the gateway's rather than the standard's. Nobody here holds a licensed copy of ISO/IEC 42001:2023, so no correspondence to it has been verified. Treat the tagging as a consistent internal taxonomy, not as a conformance claim.</p>
+        <p>Enterprise certification programmes increasingly require ISO/IEC 42001 conformance, and conformance turns on being able to show which controls each AI operation engages. Manual mapping exercises become instantly stale when your agent fleet evolves weekly. Aegis Guard attaches control ids to every finding automatically, from its own control registry.</p>
+        <p style="font-size:0.82rem;color:var(--text-muted);"><strong>What this is, precisely.</strong> The control registry is Aegis Guard's own — ids like <code>AG-LOG-01</code>, named for what they do. It is <strong>not</strong> ISO/IEC 42001 Annex A, no correspondence to it has been verified, and none is claimed. Treat the tagging as a consistent internal taxonomy that makes findings comparable across rules and jurisdictions, not as a conformance claim.</p>
       </div>
     </div>
 
@@ -1137,7 +1185,7 @@
   </div>
 
   <div class="container layer-block" id="audit">
-    <div class="layer-block__head"><span class="layer-block__num">03 / 04</span><h3>Tamper-Evident Audit Trail with ISO 42001 Control Tagging</h3></div>
+    <div class="layer-block__head"><span class="layer-block__num">03 / 04</span><h3>Tamper-Evident Audit Trail with Control Tagging</h3></div>
     <p style="color:var(--text-secondary);max-width:760px;line-height:1.75;margin-top:1.5rem;">Every compliance evaluation — whether it results in a block, a flag, or a clean pass — generates an AuditRecord sealed with HMAC-SHA256 using a 32-byte minimum secret. The hash covers the canonical serialisation of the full record, making any post-hoc tampering immediately detectable. Each signed record can chain to the one before it in the same workflow — turn each link below to see the idea.</p>
 
     <div class="chain-wrap">
@@ -1157,13 +1205,13 @@
         <div class="record-row"><span class="record-key">risk_tier</span><span class="record-val record-val--flag">PROHIBITED</span></div>
         <div class="record-row"><span class="record-key">top_rule_id</span><span class="record-val">PROH-ART5-1H</span></div>
         <div class="record-row"><span class="record-key">article_ref</span><span class="record-val">Article 5(1)(h)</span></div>
-        <div class="record-row"><span class="record-key">iso_42001_controls</span><span class="record-val">["A.5.3","A.6.1.2","A.7.3"]</span></div>
+        <div class="record-row"><span class="record-key">iso_42001_controls</span><span class="record-val">["AG-IMPACT-01","AG-DILIGENCE-01","AG-MONITOR-01"]</span></div>
         <div class="record-row"><span class="record-key">hmac_sha256</span><span class="record-val record-val--gold">a3f8c9d1…9e1d3f5a</span></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:0.9rem;">
-        <div class="control-card"><div class="control-card__id">A.5.3</div><p>AI system impact assessment — structured evaluation of effects on individuals, groups and society</p></div>
-        <div class="control-card"><div class="control-card__id">A.6.1.2</div><p>Due diligence requirements — conformity, transparency and third-party assessment before deployment</p></div>
-        <div class="control-card"><div class="control-card__id">A.7.3</div><p>Operational monitoring and control — continuous performance, drift and safety monitoring in production</p></div>
+        <div class="control-card"><div class="control-card__id">AG-IMPACT-01</div><p>AI system impact assessment — structured evaluation of effects on individuals, groups and society</p></div>
+        <div class="control-card"><div class="control-card__id">AG-DILIGENCE-01</div><p>Due diligence requirements — conformity, transparency and third-party assessment before deployment</p></div>
+        <div class="control-card"><div class="control-card__id">AG-MONITOR-01</div><p>Operational monitoring and control — continuous performance, drift and safety monitoring in production</p></div>
       </div>
     </div>
   </div>
@@ -1224,7 +1272,7 @@
   <div class="container">
     <div class="label"><span class="dot"></span>Pre-Mapped Rule Coverage</div>
     <h2 class="section-title">31 rules across seven jurisdictions. Zero configuration.</h2>
-    <p class="section-sub">Every rule shipped with Aegis Guard is pre-mapped to its governing Article or statute, risk tier, and control ids from the gateway's ISO 42001 control registry. Your compliance team does not write detection logic. They configure thresholds and review evidence.</p>
+    <p class="section-sub">Every rule shipped with Aegis Guard is pre-mapped to its governing Article or statute, risk tier, and control ids from the Aegis Guard control registry. Your compliance team does not write detection logic. They configure thresholds and review evidence.</p>
 
     <table class="coverage-table">
       <thead>
@@ -1427,7 +1475,7 @@
 <div class="trust-strip">
   <div class="trust-strip__inner">
     <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>EU AI Act Regulation (EU) 2024/1689</div>
-    <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>ISO 42001 control tagging</div>
+    <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Deterministic control tagging</div>
     <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.2-6.3-4.5-6.3 4.5 2.3-7.2-6-4.4h7.6z"/></svg>HMAC-SHA256 tamper-evident records</div>
     <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Model Context Protocol (MCP) native</div>
     <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>On-premise · VPC · Air-gapped deployments</div>
@@ -1445,7 +1493,7 @@
         <a href="mailto:abdulwahab@adesanyaaiadvisory.com">Contact</a>
       </div>
     </div>
-    <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.7;max-width:900px;">31 pre-mapped compliance rules across the EU AI Act, UK GDPR (DUAA 2025), Nigeria's NDPA, Singapore's PDPA, Egypt's PDPL, Colorado's ADMT Act (forward-looking, effective 1 Jan 2027), and India's DPDP Act (forward-looking, effective 13 May 2027) — deterministic scoring, HMAC-SHA256 tamper-evident audit records, and ISO 42001 control-registry tagging. Deploys on-premise, in your VPC, or fully air-gapped; no payload leaves your environment. Not legal advice — a compliance engineering tool your legal team configures and reviews.</p>
+    <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.7;max-width:900px;">31 pre-mapped compliance rules across the EU AI Act, UK GDPR (DUAA 2025), Nigeria's NDPA, Singapore's PDPA, Egypt's PDPL, Colorado's ADMT Act (forward-looking, effective 1 Jan 2027), and India's DPDP Act (forward-looking, effective 13 May 2027) — deterministic scoring, HMAC-SHA256 tamper-evident audit records, and Aegis Guard control-registry tagging. Deploys on-premise, in your VPC, or fully air-gapped; no payload leaves your environment. Not legal advice — a compliance engineering tool your legal team configures and reviews.</p>
   </div>
 </footer>
 
@@ -1540,7 +1588,7 @@
         stage1: [['request_id', 'req-8f3a-91cd'], ['tool_name', 'live_facial_recognition_cctv']],
         stage3: [['risk_tier', 'PROHIBITED'], ['top_rule_id', 'PROH-ART5-1H'], ['article_ref', 'Article 5(1)(h)'], ['confidence', '0.95']],
         stage4: [['action', 'CALL_BLOCKED', 'flag']],
-        stage5: [['iso_42001_controls', 'A.5.3, A.6.1.2, A.7.3'], ['hmac_sha256', 'a3f8c9d1…9e1d3f5a', 'gold']]
+        stage5: [['iso_42001_controls', 'AG-IMPACT-01, AG-DILIGENCE-01, AG-MONITOR-01'], ['hmac_sha256', 'a3f8c9d1…9e1d3f5a', 'gold']]
       }
     };
     var STAGE_TEXT = [
