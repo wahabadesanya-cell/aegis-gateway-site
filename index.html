@@ -806,7 +806,7 @@
       <a href="/pricing.html" style="color:var(--gold);font-weight:600;">Pricing</a>
     </div>
     <div class="nav__actions">
-      <a href="https://aegis-guard-gateway.onrender.com" target="_blank" rel="noopener" class="btn btn--ghost">Live Demo ↗</a>
+      <a href="https://aegis-guard-gateway.onrender.com" target="_blank" rel="noopener" class="btn btn--ghost" title="Runs on our hosted instance; enter no real data">Live Demo ↗</a>
       <a href="#cta" class="btn btn--primary"><span class="full">Request Architecture Review</span><span class="short" style="display:none;">Get Started</span></a>
     </div>
     <button type="button" class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
@@ -1154,7 +1154,7 @@
         <div class="flow-step"><div class="flow-step__num">1</div><div><h4>LLM Client Issues tools/call</h4><p>Claude Desktop / OpenAI / custom agent sends JSON-RPC request to your MCP server.</p><code>{"method": "tools/call", "params": {...}}</code></div></div>
         <div class="flow-step"><div class="flow-step__num">2</div><div><h4>@compliance_gate Intercepts</h4><p>Payload is extracted before the decorated tool function is invoked.</p><code>_extract_all_text(payload) → signals</code></div></div>
         <div class="flow-step"><div class="flow-step__num">3</div><div><h4>Rule Engine Evaluates</h4><p>All wired rules evaluated in-process. PROHIBITED tier triggers an immediate block.</p><code>_run_all_rules(tool_name, payload)</code></div></div>
-        <div class="flow-step"><div class="flow-step__num">4</div><div><h4>Signed Audit Record Written</h4><p>HMAC-SHA256 record appended to append-only JSONL log. Optionally forwarded to your SIEM via webhook.</p><code>AuditRecord.from_compliance_result()</code></div></div>
+        <div class="flow-step"><div class="flow-step__num">4</div><div><h4>Signed Audit Record Written</h4><p>HMAC-SHA256 record appended to append-only JSONL log. Optionally forwarded to your SIEM via webhook.</p></div></div>
       </div>
     </div>
   </div>
@@ -1205,7 +1205,7 @@
         <div class="record-row"><span class="record-key">risk_tier</span><span class="record-val record-val--flag">PROHIBITED</span></div>
         <div class="record-row"><span class="record-key">top_rule_id</span><span class="record-val">PROH-ART5-1H</span></div>
         <div class="record-row"><span class="record-key">article_ref</span><span class="record-val">Article 5(1)(h)</span></div>
-        <div class="record-row"><span class="record-key">iso_42001_controls</span><span class="record-val">["AG-IMPACT-01","AG-DILIGENCE-01","AG-MONITOR-01"]</span></div>
+        <div class="record-row"><span class="record-key">control_ids</span><span class="record-val">["AG-IMPACT-01","AG-DILIGENCE-01","AG-MONITOR-01"]</span></div>
         <div class="record-row"><span class="record-key">hmac_sha256</span><span class="record-val record-val--gold">a3f8c9d1…9e1d3f5a</span></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:0.9rem;">
@@ -1240,7 +1240,7 @@
   <div class="container">
     <div class="label"><span class="dot"></span>Mechanism Walkthrough</div>
     <h2 class="section-title">Watch the mechanism, end to end</h2>
-    <p class="section-sub">A tool call enters the AI data path. Aegis Guard Gateway evaluates it against the EU AI Act risk taxonomy — Prohibited, High-Risk, Transparency — before the request reaches the model, applies a fail-closed enforcement decision, and writes the outcome to a tamper-evident audit trail that is anonymised at the point of capture, not after.</p>
+    <p class="section-sub">A tool call enters the AI data path. Aegis Guard Gateway evaluates it against the EU AI Act risk taxonomy — Prohibited, High-Risk, Transparency — before the request reaches the model, applies a fail-closed enforcement decision, and writes the outcome to a tamper-evident audit trail. Tool-call arguments are never written to it. Caller identities are pseudonymised with a keyed hash when the caller-identity policy is set to pseudonymise; the default stores them as given.</p>
 
     <figure class="walkthrough">
       <figcaption class="walkthrough__bar"><b>Live demo — three calls, three verdicts</b><span>4 min 03 s · MP4</span></figcaption>
@@ -1264,7 +1264,7 @@
       </video>
     </figure>
 
-    <div class="invariant-note">The gateway resolves a specific legal collision: the EU AI Act's Article 26(6) deployer log-retention duty (deferred to 2 December 2027 under the Digital Omnibus, Regulation (EU) 2026/1744, in force 27 July 2026) requires a tamper-evident record kept for at least six months, while GDPR Articles 5 and 17 require personal data to stay minimised and erasable. Aegis Guard Gateway resolves it before the log is written — every entry is anonymised at the point of capture, signed with HMAC-SHA256, and stored inside the client's own network boundary.</div>
+    <div class="invariant-note">The gateway resolves a specific legal collision: the EU AI Act's Article 26(6) deployer log-retention duty (deferred to 2 December 2027 under the Digital Omnibus, Regulation (EU) 2026/1744, in force 27 July 2026) requires a tamper-evident record kept for at least six months, while GDPR Articles 5 and 17 require personal data to stay minimised and erasable. Aegis Guard Gateway addresses it before the log is written — tool-call arguments never enter an entry, caller identities are pseudonymised with a keyed hash when the caller-identity policy is set to pseudonymise (the default stores them as given), and every entry is signed with HMAC-SHA256 and stored inside the client's own network boundary.</div>
   </div>
 </section>
 <!-- ── RULE LEDGER ─────────────────────────────────────────────────────────── -->
@@ -1466,7 +1466,7 @@
       <a href="https://adesanyaaiadvisory.com/intake" class="btn btn--primary btn--lg">Request an Architecture Review</a>
       <a href="mailto:abdulwahab@adesanyaaiadvisory.com?subject=Aegis%20Guard%20Gateway%20Technical%20Brief%20Request" class="btn btn--outline btn--lg">Download Technical Brief</a>
     </div>
-    <p class="cta-fine">Not ready to talk? <a href="https://aegis-guard-gateway.onrender.com" target="_blank" rel="noopener">Try the live demo first ↗</a></p>
+    <p class="cta-fine">Not ready to talk? <a href="https://aegis-guard-gateway.onrender.com" target="_blank" rel="noopener">Try the live demo first ↗</a> The live demo runs on our hosted instance, so enter no real data.</p>
     <p class="cta-fine">Available for on-premise, VPC, and air-gapped deployments. NDA-protected review. &nbsp;·&nbsp; <a href="https://adesanyaaiadvisory.com/privacy-policy">Privacy Policy</a> &nbsp;·&nbsp; <a href="#audit">Security Overview</a></p>
   </div>
 </section>
@@ -1588,7 +1588,7 @@
         stage1: [['request_id', 'req-8f3a-91cd'], ['tool_name', 'live_facial_recognition_cctv']],
         stage3: [['risk_tier', 'PROHIBITED'], ['top_rule_id', 'PROH-ART5-1H'], ['article_ref', 'Article 5(1)(h)'], ['confidence', '0.95']],
         stage4: [['action', 'CALL_BLOCKED', 'flag']],
-        stage5: [['iso_42001_controls', 'AG-IMPACT-01, AG-DILIGENCE-01, AG-MONITOR-01'], ['hmac_sha256', 'a3f8c9d1…9e1d3f5a', 'gold']]
+        stage5: [['control_ids', 'AG-IMPACT-01, AG-DILIGENCE-01, AG-MONITOR-01'], ['hmac_sha256', 'a3f8c9d1…9e1d3f5a', 'gold']]
       }
     };
     var STAGE_TEXT = [
@@ -1829,8 +1829,8 @@
       (data.violations || []).forEach(function (v) {
         html += rowHtml(v.rule_id, Math.round((v.confidence || 0) * 100) + '% · ' + v.article_ref);
       });
-      if (data.iso_42001_controls && data.iso_42001_controls.length) {
-        html += rowHtml('iso_42001_controls', data.iso_42001_controls.join(', '), 'gold');
+      if (data.control_ids && data.control_ids.length) {
+        html += rowHtml('control_ids', data.control_ids.join(', '), 'gold');
       }
       if (data.pii_severity && data.pii_severity !== 'NONE') {
         html += rowHtml('pii_severity', data.pii_severity, 'flag');

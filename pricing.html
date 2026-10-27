@@ -370,15 +370,14 @@
         </div>
         <hr class="plan-divider">
         <ul class="plan-features">
-          <li><span class="icon icon--check">✓</span><span>Up to <span class="feat-highlight">5 MCP connections</span></span></li>
           <li><span class="icon icon--check">✓</span><span>EU AI Act risk tier classification (all 4 tiers)</span></li>
           <li><span class="icon icon--check">✓</span><span>Prohibited practice blocking — automatic</span></li>
           <li><span class="icon icon--check">✓</span><span>HMAC-SHA256 tamper-evident audit log</span></li>
           <li><span class="icon icon--check">✓</span><span>Log retention of at least 180 days</span></li>
           <li><span class="icon icon--check">✓</span><span>PII detection on payloads</span></li>
           <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">Aegis Guard Gateway control-registry mapping</span></li>
-          <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">Custom rule engine</span></li>
-          <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">SLA guarantee</span></li>
+          <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">Customer-defined rules (signed policy file)</span></li>
+          <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">Support SLA</span></li>
         </ul>
         <div class="plan-cta">
           <a class="btn btn--outline btn--full" href="#waitlist">Join waitlist →</a>
@@ -397,14 +396,13 @@
         </div>
         <hr class="plan-divider">
         <ul class="plan-features">
-          <li><span class="icon icon--check">✓</span><span>Up to <span class="feat-highlight">25 MCP connections</span></span></li>
           <li><span class="icon icon--check">✓</span><span>Everything in Starter</span></li>
           <li><span class="icon icon--star">★</span><span class="feat-highlight">Aegis Guard Gateway control-registry mapping</span></li>
-          <li><span class="icon icon--star">★</span><span class="feat-highlight">Custom rule engine — define your own guardrails</span></li>
+          <li><span class="icon icon--star">★</span><span class="feat-highlight">Customer-defined rules in a signed, versioned policy file. A policy adds findings and leaves built-in blocks in force</span></li>
           <li><span class="icon icon--check">✓</span><span>1-year log retention</span></li>
           <li><span class="icon icon--check">✓</span><span>Tool-call arguments never written to the audit log</span></li>
           <li><span class="icon icon--check">✓</span><span>High-Risk AI system flagging + alerting</span></li>
-          <li><span class="icon icon--check">✓</span><span>Compliance dashboard with exportable reports</span></li>
+          <li><span class="icon icon--check">✓</span><span>Audit export for an authority: a plain-language bundle for a named system and period, the signed records, a README and, where the deployment signs with Ed25519, the public-key manifest, so a third party can check the signatures offline</span></li>
           <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">Dedicated support SLA</span></li>
         </ul>
         <div class="plan-cta">
@@ -416,22 +414,18 @@
       <div class="plan">
         <span class="plan-badge plan-badge--enterprise">Enterprise</span>
         <div class="plan-name">Enterprise</div>
-        <div class="plan-desc">Unlimited connections, on-premise deployment, dedicated SLA, and a compliance implementation partner.</div>
+        <div class="plan-desc">Usage limits and support by agreement, and a compliance implementation partner.</div>
         <div class="plan-price">
           <div><span class="amount custom">Custom pricing</span></div>
           <div class="period">Contact us for a scoped quote</div>
         </div>
         <hr class="plan-divider">
         <ul class="plan-features">
-          <li><span class="icon icon--check">✓</span><span><span class="feat-highlight">Unlimited</span> MCP connections</span></li>
           <li><span class="icon icon--check">✓</span><span>Everything in Professional</span></li>
-          <li><span class="icon icon--star">★</span><span class="feat-highlight">On-premise or private cloud deployment</span></li>
-          <li><span class="icon icon--star">★</span><span class="feat-highlight">Dedicated SLA — 99.9% uptime guarantee</span></li>
+                    <li><span class="icon icon--star">★</span><span class="feat-highlight">Support SLA by agreement</span></li>
           <li><span class="icon icon--star">★</span><span class="feat-highlight">Compliance implementation partner (Adesanya AI Advisory)</span></li>
           <li><span class="icon icon--check">✓</span><span>Unlimited log retention</span></li>
-          <li><span class="icon icon--check">✓</span><span>SSO / SAML integration</span></li>
-          <li><span class="icon icon--check">✓</span><span>Priority support — 4-hour response</span></li>
-          <li><span class="icon icon--check">✓</span><span>Regulatory audit support pack</span></li>
+                    <li><span class="icon icon--check">✓</span><span>Priority support: named contact, response within 1 business day</span></li>
         </ul>
         <div class="plan-cta">
           <a class="btn btn--outline btn--full" href="https://adesanyaaiadvisory.com/#contact" target="_blank" rel="noopener">Contact us →</a>
@@ -460,48 +454,38 @@
       </thead>
       <tbody>
         <tr class="group-header"><td colspan="4">Core Gateway</td></tr>
-        <tr><td>MCP connections</td><td class="val">5</td><td class="val">25</td><td class="val">Unlimited</td></tr>
+        <tr><td>Usage limits</td><td class="val">By agreement</td><td class="val">By agreement</td><td class="val">By agreement</td></tr>
         <tr><td>Real-time JSON-RPC payload interception</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
-        <tr><td>Request latency overhead</td><td class="val">2.3 ms median</td><td class="val">2.3 ms median</td><td class="val">2.3 ms median</td></tr>
-        <tr><td>Deployment</td><td class="val">Cloud</td><td class="val">Cloud</td><td class="val">Cloud or on-premise</td></tr>
+                <tr><td>Deployment</td><td class="val">Your infrastructure</td><td class="val">Your infrastructure</td><td class="val">Your infrastructure</td></tr>
 
         <tr class="group-header"><td colspan="4">EU AI Act Compliance</td></tr>
         <tr><td>Risk tier classification (all 4 tiers)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
         <tr><td>Prohibited practice auto-blocking (Art. 5)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
         <tr><td>High-Risk system flagging + alerting (Art. 9–17)</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
         <tr><td>Transparency obligation controls (Art. 50)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
-        <tr><td>Custom classification rules</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>Customer-defined rules (signed policy file)</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
 
         <tr class="group-header"><td colspan="4">Control Registry &amp; Governance</td></tr>
         <tr><td>Control-registry mapping</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
-        <tr><td>AI risk register integration</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
-        <tr><td>Compliance dashboard + exportable reports</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Audit export for an authority (signed records, README, public-key manifest)</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
 
         <tr class="group-header"><td colspan="4">Audit & Privacy</td></tr>
         <tr><td>HMAC-SHA256 tamper-evident logging</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
         <tr><td>PII detection on payloads</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
         <tr><td>Tool-call arguments never written to the audit log</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
         <tr><td>Log retention</td><td class="val">At least 180 days</td><td class="val">1 year</td><td class="val">Unlimited</td></tr>
-        <tr><td>Regulatory audit support pack</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
 
         <tr class="group-header"><td colspan="4">Security & Access</td></tr>
-        <tr><td>SSO / SAML</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
-        <tr><td>Role-based access control</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
-        <tr><td>Uptime SLA</td><td class="dash">—</td><td class="dash">—</td><td class="val">99.9%</td></tr>
+                <tr><td>Role-scoped approvers for held calls</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
 
         <tr class="group-header"><td colspan="4">Support</td></tr>
         <tr><td>Onboarding support</td><td class="val">Email</td><td class="val">Priority email</td><td class="val">Dedicated partner</td></tr>
-        <tr><td>Response time</td><td class="val">2 business days</td><td class="val">1 business day</td><td class="val">4 hours</td></tr>
+        <tr><td>Response time</td><td class="val">2 business days</td><td class="val">1 business day</td><td class="val">1 business day, or as agreed in contract</td></tr>
+        <tr><td>Support SLA</td><td class="dash">—</td><td class="dash">—</td><td class="val">By agreement</td></tr>
         <tr><td>Compliance implementation partner</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
       </tbody>
     </table>
     </div>
-    <p class="feat-table__note">
-      Request latency overhead is the median added by the full interception path —
-      rule evaluation, policy decision and signed audit write — measured on a
-      2&nbsp;vCPU cloud instance, Linux, ext4 local disk, 3,000 calls per payload
-      shape, August&nbsp;2026. 95th percentile 4.0&nbsp;ms.
-    </p>
   </div>
 </section>
 
@@ -510,10 +494,6 @@
   <div class="container">
     <h2>Frequently asked questions</h2>
     <div class="faq-grid">
-      <div class="faq-item">
-        <h3>What is an MCP connection?</h3>
-        <p>An MCP (Model Context Protocol) connection is a single integration between an LLM client — such as Claude Desktop or a custom AI assistant — and an internal system (API, database, service). Each connection is protected by Aegis Guard Gateway in real time.</p>
-      </div>
       <div class="faq-item">
         <h3>When will Aegis Guard Gateway be available?</h3>
         <p>Aegis Guard Gateway is currently in private early access. Joining the waitlist locks in early access pricing and gives you priority onboarding when we open the next cohort.</p>
@@ -531,8 +511,8 @@
         <p>Enterprise customers get direct access to Adesanya AI Advisory for EU AI Act and ISO 42001 guidance alongside the technical deployment — legal and governance counsel built into the engagement.</p>
       </div>
       <div class="faq-item">
-        <h3>Is on-premise deployment available on lower tiers?</h3>
-        <p>On-premise and private cloud deployment is available on the Enterprise tier. Starter and Professional run on Aegis Guard Gateway's managed cloud infrastructure with data residency in the EU.</p>
+        <h3>Where does the gateway run?</h3>
+        <p>Aegis Guard Gateway runs inside your own infrastructure on every tier, on your premises or in your own cloud account.</p>
       </div>
     </div>
   </div>
