@@ -913,11 +913,11 @@
         <div class="juris-card__law">Personal Data Protection Act 2012, s.16</div>
         <div class="juris-card__stat"><span>1 rule</span><span style="color:var(--minimal);">Active</span></div>
       </div>
-      <div class="juris-card juris-card--transitional">
+      <div class="juris-card juris-card--active">
         <div class="juris-card__flag">Egypt</div>
         <h4>PDPL 2020</h4>
-        <div class="juris-card__law">Law No. 151/2020, Art. 17 — grace period ends ~Nov 2026</div>
-        <div class="juris-card__stat"><span>1 rule</span><span style="color:var(--high-risk);">Transitional</span></div>
+        <div class="juris-card__law">Law No. 151/2020, Art. 17 — grace period ended 31 Oct 2026</div>
+        <div class="juris-card__stat"><span>1 rule</span><span style="color:var(--minimal);">Active</span></div>
       </div>
       <div class="juris-card juris-card--upcoming">
         <div class="juris-card__flag">Colorado, US</div>
@@ -1164,7 +1164,7 @@
     <div class="layer-grid">
       <div>
         <p>Unlike probabilistic LLM-based classifiers, Aegis Guard Gateway uses a fully deterministic, explainable scoring model with four independent signal dimensions. Each dimension has a fixed maximum contribution weight, making every classification decision independently auditable and reproducible from the raw payload alone.</p>
-        <p>The engine evaluates every wired rule simultaneously — the 23 EU AI Act rules, Nigeria's NDPA 2023 rules, the UK's Data (Use and Access) Act 2025 rule, Singapore's PDPA 2012 rule, Egypt's PDPL rule, and Colorado's SB26-189 rule (wired now for forward-looking flagging; the underlying law itself isn't enforceable until 1 Jan 2027) — through the same scoring model. Every match returns a <code>ScoreBreakdown</code> object logging each dimension's contribution, the pre-clamp total, and whether an exception pattern reduced the score.</p>
+        <p>The engine evaluates every wired rule simultaneously — the 23 EU AI Act rules, Nigeria's NDPA 2023 rules, the UK's Data (Use and Access) Act 2025 rule, Singapore's PDPA 2012 rule, Egypt's PDPL rule, Colorado's SB26-189 rule and India's two DPDP Act rules (the last two wired now for forward-looking flagging; the underlying laws aren't enforceable until 1 Jan 2027 and 13 May 2027 respectively) — through the same scoring model. Every match returns a <code>ScoreBreakdown</code> object logging each dimension's contribution, the pre-clamp total, and whether an exception pattern reduced the score.</p>
         <div class="tag-row">
           <span class="tag">TOOL_NAME_STRUCTURAL +0.40</span><span class="tag">KEY_PATH_STRUCTURAL +0.25</span><span class="tag">CONTENT +0.20</span><span class="tag">CONJUNCTION +0.50</span><span class="tag">EXCEPTION −0.30</span>
         </div>
@@ -1281,14 +1281,14 @@
       <tbody>
         <tr>
           <td><span class="tier-badge tier--prohibited">Prohibited</span></td>
-          <td class="num">10</td>
-          <td>EU</td>
+          <td class="num">11</td>
+          <td>EU · India</td>
           <td>Real-time remote biometric identification in publicly accessible spaces (Art. 5(1)(h))</td>
         </tr>
         <tr>
           <td><span class="tier-badge tier--high">High Risk</span></td>
-          <td class="num">17</td>
-          <td>EU · UK · Nigeria · Singapore · Egypt · Colorado</td>
+          <td class="num">18</td>
+          <td>EU · UK · Nigeria · Singapore · Egypt · Colorado · India</td>
           <td>Employment, HR &amp; recruitment scoring (Annex III §4); cross-jurisdiction automated-decision and consent-withdrawal duties</td>
         </tr>
         <tr>
@@ -1354,7 +1354,7 @@
 
     <div class="ndpa-divider">
       <h3 style="margin-bottom:0.75rem;">Plus 1 rule for Egypt — Personal Data Protection Law No. 151/2020, Art. 17</h3>
-      <p class="section-sub" style="margin-bottom:1.5rem;">Egypt's Personal Data Protection Law prohibits direct electronic marketing unless the sender provides a clear mechanism to refuse or withdraw consent. Its grace period ends around October/November 2026.</p>
+      <p class="section-sub" style="margin-bottom:1.5rem;">Egypt's Personal Data Protection Law prohibits direct electronic marketing unless the sender provides a clear mechanism to refuse or withdraw consent. Its grace period ended on 31 October 2026.</p>
       <div class="rules-grid" style="grid-template-columns:repeat(1,1fr);">
         <div class="rule-cell"><div class="rule-id">HIGH-EG-PDPL-ART17-MARKETING</div><div class="rule-title">Direct Electronic Marketing Continues Without Honoring Refusal or Withdrawal</div><div class="rule-meta"><span class="tier-badge tier--high">High Risk</span><span class="rule-art">PDPL 2020, Arts. 17–18</span></div></div>
       </div>
@@ -1394,7 +1394,7 @@
 <section class="section" style="border-top:1px solid var(--border);">
   <div class="container">
     <div class="label"><span class="dot"></span>Regulatory Clock</div>
-    <h2 class="section-title">The enforcement calendar is not negotiable — in any of the six</h2>
+    <h2 class="section-title">The enforcement calendar is not negotiable — in any jurisdiction</h2>
     <p class="section-sub">Your procurement cycle, your legal review cycle, and your engineering integration cycle all need to complete before the relevant enforcement date, whichever jurisdiction it falls in. Aegis Guard Gateway is designed to compress the integration timeline to days, not quarters.</p>
 
     <div class="docket">
@@ -1419,9 +1419,9 @@
         <div class="docket-body">Article 50 transparency duties (chatbot disclosure, deepfake labelling) apply, national authorities gain penalty powers, Article 4 AI literacy becomes enforceable, and GPAI model enforcement begins.</div>
       </div>
       <div class="docket-item">
-        <div class="docket-date">~October/November 2026 — Approaching<span class="docket-tag" style="color:#C9714A;">EG</span></div>
-        <div class="docket-title">Egypt PDPL Grace Period Ends</div>
-        <div class="docket-body">The Executive Regulations to Egypt's Personal Data Protection Law took effect 1 November 2025 with a one-year compliance grace period. Full enforcement, including Article 17's marketing-consent duty, lands around this date.</div>
+        <div class="docket-date">1 November 2026 — Active<span class="docket-tag" style="color:#C9714A;">EG</span></div>
+        <div class="docket-title">Egypt PDPL Grace Period Ended</div>
+        <div class="docket-body">The Executive Regulations to Egypt's Personal Data Protection Law were issued on 1 November 2025 with a one-year compliance grace period, which ended on 31 October 2026. Full enforcement, including Article 17's marketing-consent duty, is expected from 1 November 2026.</div>
       </div>
       <div class="docket-item">
         <div class="docket-date">2 December 2026 — Approaching<span class="docket-tag" style="color:var(--gold);">EU</span></div>
