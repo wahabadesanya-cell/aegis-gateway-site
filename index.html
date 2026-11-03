@@ -865,7 +865,7 @@
 <span class="cmt"># Every call now produces a signed AuditRecord:
 # {
 #   "risk_tier": "HIGH_RISK",  "article": "Article 6(2) + Annex III §4",
-#   "iso_controls": ["AG-DATAPREP-01", "AG-NOTICE-01", "AG-LOG-01"],  "is_blocked": true,
+#   "iso_controls": ["AG-DATAPREP-01", "AG-NOTICE-01", "AG-LOG-01"],  "is_blocked": false,  "action": "FLAGGED_FOR_REVIEW",
 #   "hmac_sha256": "a3f8…c91d",  "confidence": 0.95
 # }</span></pre>
   </div>
@@ -1012,7 +1012,7 @@
         <p>Aegis Guard Gateway runs in-process, inside your own perimeter — no payload ever leaves your environment to reach a third-party classifier.</p>
         <ul class="persona-list">
           <li>On-premise, VPC, and air-gapped deployment options, no vendor data path.</li>
-          <li>Deterministic scoring — no LLM-in-the-loop, no prompt-injection surface to defend.</li>
+          <li>Deterministic scoring with no model in the decision path. The gateway limits what an AI agent can do by checking each action before it runs; use it alongside an injection defence, not instead of one.</li>
           <li>Per-tier thresholds you control, with hard-blocked invariants at startup.</li>
           <li>SIEM-ready webhook export for your existing detection and response pipeline.</li>
         </ul>
