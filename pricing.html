@@ -345,7 +345,7 @@
   <div class="hero__glow"></div>
   <div class="container">
     <div class="hero__eyebrow"><span class="dot"></span> Pricing — Early Access</div>
-    <h1>Simple, transparent pricing.<br>Built for enterprise scale.</h1>
+    <h1>Simple, transparent pricing.</h1>
     <p>Every tier enforces documented policy rules at each tool call and keeps a tamper-evident audit log. No per-request fees. No hidden compliance surcharges.</p>
 
     <div class="toggle-wrap">
@@ -376,7 +376,7 @@
           <li><span class="icon icon--check">✓</span><span>Log retention of at least 180 days</span></li>
           <li><span class="icon icon--check">✓</span><span>PII detection on payloads</span></li>
           <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">Aegis Guard Gateway control-registry mapping</span></li>
-          <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">Customer-defined rules (signed policy file)</span></li>
+          <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">Customer-defined rules (optional, signed policy file)</span></li>
           <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">Support SLA</span></li>
         </ul>
         <div class="plan-cta">
@@ -398,10 +398,10 @@
         <ul class="plan-features">
           <li><span class="icon icon--check">✓</span><span>Everything in Starter</span></li>
           <li><span class="icon icon--star">★</span><span class="feat-highlight">Aegis Guard Gateway control-registry mapping</span></li>
-          <li><span class="icon icon--star">★</span><span class="feat-highlight">Customer-defined rules in a signed, versioned policy file. A policy adds findings and leaves built-in blocks in force</span></li>
+          <li><span class="icon icon--star">★</span><span class="feat-highlight">Optional customer-defined rules in a signed, versioned policy file. A policy adds findings and leaves built-in blocks in force</span></li>
           <li><span class="icon icon--check">✓</span><span>1-year log retention</span></li>
           <li><span class="icon icon--check">✓</span><span>Tool-call arguments never written to the audit log</span></li>
-          <li><span class="icon icon--check">✓</span><span>High-Risk AI system flagging + alerting</span></li>
+          <li><span class="icon icon--check">✓</span><span>High-Risk AI system flagging, with optional forwarding to your SIEM</span></li>
           <li><span class="icon icon--check">✓</span><span>Audit export for an authority: a plain-language bundle for a named system and period, the signed records, a README and, where the deployment signs with Ed25519, the public-key manifest, so a third party can check the signatures offline</span></li>
           <li><span class="icon icon--dash">—</span><span style="color:var(--text-muted);">Dedicated support SLA</span></li>
         </ul>
@@ -461,9 +461,9 @@
         <tr class="group-header"><td colspan="4">EU AI Act Compliance</td></tr>
         <tr><td>Risk tier classification (all 4 tiers)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
         <tr><td>Prohibited practice auto-blocking (Art. 5)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
-        <tr><td>High-Risk system flagging + alerting (Art. 9–17)</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>High-Risk system flagging, with optional forwarding to your SIEM (Art. 9–17)</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
         <tr><td>Transparency obligation controls (Art. 50)</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
-        <tr><td>Customer-defined rules (signed policy file)</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+        <tr><td>Customer-defined rules (optional, signed policy file)</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
 
         <tr class="group-header"><td colspan="4">Control Registry &amp; Governance</td></tr>
         <tr><td>Control-registry mapping</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
@@ -476,7 +476,7 @@
         <tr><td>Log retention</td><td class="val">At least 180 days</td><td class="val">1 year</td><td class="val">Unlimited</td></tr>
 
         <tr class="group-header"><td colspan="4">Security & Access</td></tr>
-                <tr><td>Role-scoped approvers for held calls</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Role-scoped approvers for held calls (optional, off by default)</td><td class="dash">—</td><td class="check">✓</td><td class="check">✓</td></tr>
 
         <tr class="group-header"><td colspan="4">Support</td></tr>
         <tr><td>Onboarding support</td><td class="val">Email</td><td class="val">Priority email</td><td class="val">Dedicated partner</td></tr>
@@ -508,7 +508,7 @@
       </div>
       <div class="faq-item">
         <h3>What does "compliance implementation partner" mean?</h3>
-        <p>Enterprise customers get direct access to Adesanya AI Advisory for EU AI Act and ISO 42001 guidance alongside the technical deployment — legal and governance counsel built into the engagement.</p>
+        <p>Enterprise customers get AI governance guidance from Adesanya AI Advisory alongside the deployment, on the EU AI Act and ISO 42001.</p>
       </div>
       <div class="faq-item">
         <h3>Where does the gateway run?</h3>

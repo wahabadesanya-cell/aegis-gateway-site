@@ -885,8 +885,8 @@
 <section class="section" id="jurisdictions" style="border-top:1px solid var(--border);">
   <div class="container">
     <div class="label"><span class="dot"></span>Jurisdictions Covered</div>
-    <h2 class="section-title">Seven jurisdictions, one engine, zero configuration</h2>
-    <p class="section-sub">Aegis Guard Gateway doesn't just cover the EU AI Act. Every jurisdiction below is built on real, binding law — verified against primary-source legal text, not policy drafts or non-binding frameworks — and the rule set keeps growing as new jurisdictions are researched and activated. Five rulesets are already enforceable today. Five individual rules are wired ahead of the date their law applies and are flagged as forward-looking risks rather than live violations until then: the two EU AI Act rules for Article 5(1)(ba) and (bb), which Article 113 applies from 2 December 2026; Colorado's, ahead of 1 January 2027; and India's two, ahead of 13 May 2027.</p>
+    <h2 class="section-title">Seven jurisdictions, one engine, pre-mapped, no detection logic to write</h2>
+    <p class="section-sub">Aegis Guard Gateway doesn't just cover the EU AI Act. Every jurisdiction below is built on real, binding law — each rule cites its primary-source provision, not a policy draft or non-binding framework — and the rule set keeps growing as new jurisdictions are researched and activated. Five rulesets are already enforceable today. Five individual rules are wired ahead of the date their law applies and are flagged as forward-looking risks rather than live violations until then: the two EU AI Act rules for Article 5(1)(ba) and (bb), which Article 113 applies from 2 December 2026; Colorado's, ahead of 1 January 2027; and India's two, ahead of 13 May 2027.</p>
 
     <div class="juris-grid">
       <div class="juris-card juris-card--active">
@@ -980,7 +980,7 @@
       <p style="margin-bottom:1.25rem;">Rather than auditing outputs after the fact, Aegis Guard Gateway intercepts every JSON-RPC tool call at the point of execution — before your tool's own business logic runs — classifying the intent, blocking prohibited operations, and writing a cryptographically signed audit record in a single atomic operation. Your compliance posture is enforced, not reported.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
         <div style="font-size:0.85rem;color:var(--text-secondary);"><strong style="color:var(--gold);">Prevent, not detect.</strong> Hard blocks on PROHIBITED-tier operations execute before the downstream tool function runs.</div>
-        <div style="font-size:0.85rem;color:var(--text-secondary);"><strong style="color:var(--gold);">Evidence-grade records.</strong> Every evaluation produces an HMAC-SHA256 signed record suitable for regulatory submission.</div>
+        <div style="font-size:0.85rem;color:var(--text-secondary);"><strong style="color:var(--gold);">Verifiable records.</strong> Every evaluation produces an HMAC-SHA256 signed record an authority can verify offline.</div>
         <div style="font-size:0.85rem;color:var(--text-secondary);"><strong style="color:var(--gold);">Continuous control tagging.</strong> Control ids from the gateway's registry are injected into every audit record without configuration.</div>
       </div>
     </div>
@@ -1011,10 +1011,10 @@
         <h3>A control you can approve without opening a new attack surface</h3>
         <p>Aegis Guard Gateway runs in-process, inside your own perimeter — no payload ever leaves your environment to reach a third-party classifier.</p>
         <ul class="persona-list">
-          <li>On-premise, VPC, and air-gapped deployment options, no vendor data path.</li>
+          <li>On-premise, VPC, and air-gapped deployment options, no vendor data path. Air-gapped runs without external timestamp anchoring.</li>
           <li>Deterministic scoring with no model in the decision path. The gateway limits what an AI agent can do by checking each action before it runs; use it alongside an injection defence, not instead of one.</li>
           <li>Per-tier thresholds you control, with hard-blocked invariants at startup.</li>
-          <li>SIEM-ready webhook export for your existing detection and response pipeline.</li>
+          <li>Optional SIEM webhook export for your existing detection and response pipeline.</li>
         </ul>
       </div>
       <div class="persona-card" id="persona-eng">
@@ -1240,7 +1240,7 @@
   <div class="container">
     <div class="label"><span class="dot"></span>Mechanism Walkthrough</div>
     <h2 class="section-title">Watch the mechanism, end to end</h2>
-    <p class="section-sub">A tool call enters the AI data path. Aegis Guard Gateway evaluates it against the EU AI Act risk taxonomy — Prohibited, High-Risk, Transparency — before the request reaches the model, applies a fail-closed enforcement decision, and writes the outcome to a tamper-evident audit trail. Tool-call arguments are never written to it. Caller identities are pseudonymised with a keyed hash when the caller-identity policy is set to pseudonymise; the default stores them as given.</p>
+    <p class="section-sub">A tool call enters the AI data path. Aegis Guard Gateway evaluates it against the EU AI Act risk taxonomy — Prohibited, High-Risk, Transparency — before the tool runs, applies a fail-closed enforcement decision, and writes the outcome to a tamper-evident audit trail. Tool-call arguments are never written to it. Caller identities are pseudonymised with a keyed hash when the caller-identity policy is set to pseudonymise; the default stores them as given.</p>
 
     <figure class="walkthrough">
       <figcaption class="walkthrough__bar"><b>Live demo — three calls, three verdicts</b><span>4 min 03 s · MP4</span></figcaption>
@@ -1271,7 +1271,7 @@
 <section class="section" id="rules" style="border-top:1px solid var(--border);">
   <div class="container">
     <div class="label"><span class="dot"></span>Pre-Mapped Rule Coverage</div>
-    <h2 class="section-title">31 rules across seven jurisdictions. Zero configuration.</h2>
+    <h2 class="section-title">31 rules across seven jurisdictions. Pre-mapped, no detection logic to write.</h2>
     <p class="section-sub">Every rule shipped with Aegis Guard Gateway is pre-mapped to its governing Article or statute, risk tier, and control ids from the Aegis Guard Gateway control registry. Your compliance team does not write detection logic. They configure thresholds and review evidence.</p>
 
     <table class="coverage-table">
@@ -1493,7 +1493,7 @@
         <a href="mailto:abdulwahab@adesanyaaiadvisory.com">Contact</a>
       </div>
     </div>
-    <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.7;max-width:900px;">31 pre-mapped compliance rules across the EU AI Act, UK GDPR (DUAA 2025), Nigeria's NDPA, Singapore's PDPA, Egypt's PDPL, Colorado's ADMT Act (forward-looking, effective 1 Jan 2027), and India's DPDP Act (forward-looking, effective 13 May 2027) — deterministic scoring, HMAC-SHA256 tamper-evident audit records, and Aegis Guard Gateway control-registry tagging. Deploys on-premise, in your VPC, or fully air-gapped; no payload leaves your environment. Not legal advice — a compliance engineering tool your legal team configures and reviews.</p>
+    <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.7;max-width:900px;">31 pre-mapped compliance rules across the EU AI Act, UK GDPR (DUAA 2025), Nigeria's NDPA, Singapore's PDPA, Egypt's PDPL, Colorado's ADMT Act (forward-looking, effective 1 Jan 2027), and India's DPDP Act (forward-looking, effective 13 May 2027) — deterministic scoring, HMAC-SHA256 tamper-evident audit records, and Aegis Guard Gateway control-registry tagging. Deploys on-premise, in your VPC, or fully air-gapped; no payload leaves your environment. Air-gapped runs without external timestamp anchoring. Not legal advice — a compliance engineering tool your legal team configures and reviews.</p>
   </div>
 </footer>
 
