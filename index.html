@@ -1102,7 +1102,7 @@
                never persists input. Only this "Try your own" mode calls
                it; the three sample scenarios above stay fully local, no
                network request. -->
-          <p class="check-live-note" id="checkLiveNote" hidden>Runs the real Aegis Guard Gateway engine live. Nothing you submit is stored.</p>
+          <p class="check-live-note" id="checkLiveNote" hidden>Live evaluation is by invitation. Use the sample scenarios above, or contact us for a guided walkthrough.</p>
 
           <div class="check-actions">
             <button type="button" class="btn btn--primary" id="checkRunBtn">Run compliance check</button>
@@ -1746,7 +1746,20 @@
     // (tick 1) then jumps straight to "done" on a real response — adding a
     // fabricated 5-stage reveal on top of an actual round-trip would
     // misrepresent what's happening.
+    // Interim (11 Nov 2026, owner instruction): live evaluation is by
+    // invitation while the evaluation terms are under review. This page sends
+    // nothing to the engine; invited visitors use the demo with their code.
+    var GUIDED_HTML = '<p class="check-record__empty"><strong>Guided evaluation available.</strong> ' +
+      'Live evaluation access is currently by invitation. Please contact us at ' +
+      '<a href="mailto:abdulwahab@adesanyaaiadvisory.com?subject=Aegis%20Guard%20guided%20walkthrough">abdulwahab@adesanyaaiadvisory.com</a> ' +
+      'to arrange a walkthrough. Do not send personal data, confidential information or production payloads.</p>';
+
     function runLiveCheck() {
+      setError(null);
+      clearTicks();
+      recordEl.innerHTML = GUIDED_HTML;
+      statusEl.textContent = 'READY';
+      return;
       var toolName = toolNameInput.value.trim();
       var payloadText = payloadInput.value.trim();
       setError(null);
