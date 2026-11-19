@@ -804,7 +804,7 @@
       <a href="/pricing.html" style="color:var(--gold);font-weight:600;">Pricing</a>
     </div>
     <div class="nav__actions">
-      <a href="mailto:abdulwahab@adesanyaaiadvisory.com?subject=Aegis%20Guard%20Gateway%20Guided%20Demo%20Request" class="btn btn--ghost" title="A guided walkthrough of the live engine, arranged by invitation">Book a Demo</a>
+      <a href="mailto:abdulwahab@adesanyaaiadvisory.com?subject=Aegis%20Guard%20Gateway%20Guided%20Demo%20Request" class="btn btn--ghost" title="A guided walkthrough, arranged by invitation">Book a Demo</a>
       <a href="#cta" class="btn btn--primary"><span class="full">Request Architecture Review</span><span class="short" style="display:none;">Get Started</span></a>
     </div>
     <button type="button" class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
@@ -1100,7 +1100,7 @@
                never persists input. Only this "Try your own" mode calls
                it; the three sample scenarios above stay fully local, no
                network request. -->
-          <p class="check-live-note" id="checkLiveNote" hidden>Live evaluation is by invitation. Use the sample scenarios above, or contact us for a guided walkthrough.</p>
+          <p class="check-live-note" id="checkLiveNote" hidden>Evaluation of your own tool calls is by invitation. Use the sample scenarios above, or contact us for a guided walkthrough.</p>
 
           <div class="check-actions">
             <button type="button" class="btn btn--primary" id="checkRunBtn">Run compliance check</button>
@@ -1241,12 +1241,12 @@
     <p class="section-sub">A tool call enters the AI data path. Aegis Guard Gateway evaluates it against the EU AI Act risk taxonomy — Prohibited, High-Risk, Transparency — before the tool runs, applies a fail-closed enforcement decision, and writes the outcome to a tamper-evident audit trail. Tool-call arguments are never written to it. Caller identities are pseudonymised with a keyed hash when the caller-identity policy is set to pseudonymise; the default stores them as given.</p>
 
     <figure class="walkthrough">
-      <figcaption class="walkthrough__bar"><b>Live demo — three calls, three verdicts</b><span>4 min 03 s · MP4</span></figcaption>
+      <figcaption class="walkthrough__bar"><b>Demonstration film — three calls, three verdicts</b><span>4 min 03 s · MP4</span></figcaption>
       <video controls preload="metadata"
              poster="/aegis-guard-demo-poster.png"
-             aria-label="Aegis Guard Gateway live demo: three tool calls, three verdicts">
+             aria-label="Aegis Guard Gateway demonstration film: three tool calls, three verdicts">
         <source src="/aegis-guard-demo.mp4" type="video/mp4">
-        <p class="walkthrough__fallback">Your browser does not support embedded video. <a href="/aegis-guard-demo.mp4">Download the demo (MP4)</a>.</p>
+        <p class="walkthrough__fallback">Your browser does not support embedded video. <a href="/aegis-guard-demo.mp4">Download the demonstration film (MP4)</a>.</p>
       </video>
     </figure>
 
@@ -1464,7 +1464,7 @@
       <a href="https://adesanyaaiadvisory.com/intake" class="btn btn--primary btn--lg">Request an Architecture Review</a>
       <a href="mailto:abdulwahab@adesanyaaiadvisory.com?subject=Aegis%20Guard%20Gateway%20Technical%20Brief%20Request" class="btn btn--outline btn--lg">Download Technical Brief</a>
     </div>
-    <p class="cta-fine">Not ready to talk? Try the sample scenarios above, or <a href="mailto:abdulwahab@adesanyaaiadvisory.com?subject=Aegis%20Guard%20Gateway%20Guided%20Demo%20Request">book a guided demo of the live engine</a>.</p>
+    <p class="cta-fine">Not ready to talk? Try the sample scenarios above, or <a href="mailto:abdulwahab@adesanyaaiadvisory.com?subject=Aegis%20Guard%20Gateway%20Guided%20Demo%20Request">book a guided walkthrough</a>.</p>
     <p class="cta-fine">Available for on-premise, VPC, and air-gapped deployments. NDA-protected review. &nbsp;·&nbsp; <a href="https://adesanyaaiadvisory.com/privacy-policy">Privacy Policy</a> &nbsp;·&nbsp; <a href="#audit">Security Overview</a></p>
   </div>
 </section>
@@ -1652,7 +1652,7 @@
         toolNameEl.hidden = true; payloadEl.hidden = true;
         toolNameInput.hidden = false; payloadInput.hidden = false;
         liveNoteEl.hidden = false;
-        badgeEl.textContent = 'Live engine · real classification';
+        badgeEl.textContent = 'By invitation · no request is sent';
         badgeEl.classList.add('check-badge--live');
         if (!customInitialized) {
           toolNameInput.value = CUSTOM_DEFAULT_TOOL;
