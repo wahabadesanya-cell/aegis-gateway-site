@@ -852,11 +852,11 @@
     <span class="kw">return</span> hiring_pipeline.evaluate(payload)
 
 <span class="cmt"># ─────────────────────────────────────────────────────────────────
-# After — one import, one decorator. Full EU AI Act Article 6 coverage.</span>
-<span class="kw">from</span> aegis_guard <span class="kw">import</span> compliance_gate
+# After: one import, one decorator on each tool.</span>
+<span class="kw">from</span> aegis_guard.middleware.interceptor <span class="kw">import</span> compliance_gate
 
 @mcp.tool()
-<span class="accent">@compliance_gate</span>        <span class="cmt"># ← intercepts, classifies, blocks, and signs</span>
+<span class="accent">@compliance_gate("screen_candidates")</span>  <span class="cmt"># ← intercepts, classifies, blocks, and signs</span>
 <span class="kw">async def</span> <span class="fn">screen_candidates</span>(payload: dict) -> dict:
     <span class="kw">return</span> hiring_pipeline.evaluate(payload)
 
@@ -1020,7 +1020,7 @@
         <h3>One decorator. No agent rewrite. Ships in an afternoon.</h3>
         <p>Aegis Guard Gateway instruments an existing FastMCP tool without touching its business logic — you add an import and a decorator, nothing else moves.</p>
         <ul class="persona-list">
-          <li><code>@compliance_gate</code> wraps any <code>@mcp.tool()</code> function directly, in place.</li>
+          <li><code>@compliance_gate("tool_name")</code> wraps an async <code>@mcp.tool()</code> function directly, in place.</li>
           <li>Fully deterministic scoring — every classification is reproducible from the raw payload.</li>
           <li>No new infrastructure to run: it executes in-process on every tool call.</li>
           <li>Tested Python: 9,000+ passing tests across the repository, covering the engine, research pipeline and internal tooling.</li>
@@ -1142,7 +1142,7 @@
     <div class="layer-block__head"><span class="layer-block__num">01 / 04</span><h3>The Real-Time JSON-RPC Interceptor Layer</h3></div>
     <div class="layer-grid">
       <div>
-        <p>Aegis Guard Gateway inserts itself at the <strong style="color:var(--gold);">MCP tool-invocation boundary</strong> using a single <code>@compliance_gate</code> decorator. Every <code>tools/call</code> JSON-RPC request is intercepted before Python execution begins. Tool name, all key paths, all nested values, and semantic conjunctions are extracted as structured signal vectors.</p>
+        <p>Aegis Guard Gateway inserts itself at the <strong style="color:var(--gold);">MCP tool-invocation boundary</strong> using one <code>@compliance_gate</code> decorator on each tool. Each call to a wrapped tool is intercepted before the tool runs. Tool name, all key paths, all nested values, and semantic conjunctions are extracted as structured signal vectors.</p>
         <p>Existing agent implementations require no modification to business logic. One import and one decorator instruments an entire MCP server in under five minutes. The interceptor is deployed in your environment — no traffic leaves your perimeter.</p>
         <div class="tag-row">
           <span class="tag">@compliance_gate</span><span class="tag">JSON-RPC 2.0</span><span class="tag">In-process</span><span class="tag">Zero agent rewrite</span><span class="tag">FastMCP native</span>
@@ -1251,16 +1251,6 @@
     </figure>
 
     <div class="invariant-note">Recorded 7 September 2026. An agent attempts three actions: an ordinary database query, which is allowed; a marketing message carrying a national identity number to a customer who had already refused, which is stopped for human review; and a real-time facial-recognition request for law enforcement, refused outright under Article 5(1)(h). Every line of output is the gateway&rsquo;s own &mdash; the three demo tools are inert stubs, but the gate, the rules, the signing and the verification are the production code. Rule counts stated in the film are correct as at that date.</div>
-
-    <figure class="walkthrough">
-      <figcaption class="walkthrough__bar"><b>Mechanism walkthrough</b><span>7 min 35 s · MP4</span></figcaption>
-      <video controls preload="metadata"
-             poster="/aegis-guard-video-poster.png"
-             aria-label="Aegis Guard Gateway mechanism walkthrough">
-        <source src="/aegis-guard-mechanism-walkthrough.mp4" type="video/mp4">
-        <p class="walkthrough__fallback">Your browser does not support embedded video. <a href="/aegis-guard-mechanism-walkthrough.mp4">Download the walkthrough (MP4)</a>.</p>
-      </video>
-    </figure>
 
     <div class="invariant-note">The gateway resolves a specific legal collision: the EU AI Act's Article 26(6) deployer log-retention duty (deferred to 2 December 2027 under the Digital Omnibus, Regulation (EU) 2026/1744, in force 27 July 2026) requires a tamper-evident record kept for at least six months, while GDPR Articles 5 and 17 require personal data to stay minimised and erasable. Aegis Guard Gateway addresses it before the log is written — tool-call arguments never enter an entry, caller identities are pseudonymised with a keyed hash when the caller-identity policy is set to pseudonymise (the default stores them as given), and every entry is signed with HMAC-SHA256 and stored inside the client's own network boundary.</div>
   </div>
